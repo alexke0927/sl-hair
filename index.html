@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SL百元專業剪髮 | 極速、平價、時尚沙龍</title>
+
+    <!-- SEO 與 Meta 設定 -->
+    <meta name="description" content="SL百元專業剪髮提供最快、最專業的男士女士剪髮服務。只需120元，由擁有多年沙龍經驗的設計師為您量身打造完美輪廓。本站提供線上號碼牌即時等候時間估算。">
+    <meta name="keywords" content="SL剪髮, 百元剪髮, 快速剪髮, 台北剪髮, 平價沙龍, 排隊叫號">
+
+    <!-- 引入美觀的字體 Outfit 與 Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- 網頁視覺樣式設計 (CSS) -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <!-- 背景裝飾微光 -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <!-- 1. Header (導覽列) -->
+    <header class="header" id="mainHeader">
+        <div class="nav-container">
+            <a href="#home" class="logo" id="navLogo">
+                SL<span>百元專業剪髮</span>
+            </a>
+
+            <button class="nav-toggle" id="menuToggleBtn" aria-label="切換選單">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu" id="navMenuList">
+                <li><a href="#home" class="nav-link">首頁</a></li>
+                <li><a href="#features" class="nav-link">服務特色</a></li>
+                <li><a href="#services" class="nav-link">收費標準</a></li>
+                <li><a href="#stylists" class="nav-link">專業團隊</a></li>
+                <li><a href="./queue.html" class="nav-link">排隊估算</a></li>
+                <li><a href="./queue.html" class="btn btn-primary" id="headerCtaBtn">即時抽牌</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section (主視覺看板) -->
+    <section id="home" class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="hero-tagline">
+                    ⚡ 快速・平價・不妥協的品質
+                </div>
+                <h1>專業，<br>不需昂貴的<span>代價</span></h1>
+                <p>
+                    「SL百元專業剪髮」結合了現代極速理念與精湛剪髮工藝。我們提供俐落、乾淨且充滿時尚感的剪髮服務，讓您在 10 分鐘內煥然一新。
+                </p>
+                <div class="hero-actions">
+                    <a href="./queue.html" class="btn btn-primary">查詢叫號進度</a>
+                    <a href="#services" class="btn btn-secondary">瀏覽服務項目</a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="visual-outline"></div>
+                <div class="visual-solid">
+                    <div class="visual-icon">✂</div>
+                    <div class="visual-label">專業快速剪</div>
+                    <div class="visual-price">NT$120</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Features Section (服務特色) -->
+    <section id="features" class="container">
+        <div class="section-title">
+            <h2>為什麼選擇 SL 剪髮？</h2>
+            <p>打破您對傳統百元剪髮的刻板印象，重塑您的理髮體驗</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3>不求快，只為讓你滿意</h3>
+                <p>我們專注於每一處細節的雕琢，不因平價而壓縮理髮時間，細心為您剪出最滿意的自信輪廓。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💖</div>
+                <h3>真心實意的為你設計</h3>
+                <p>用心傾聽您的造型想法，針對您的髮質與頭型量身修剪，用真誠溫暖的態度對待每一根髮絲。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Services & Pricing (收費標準) -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>我們的服務與收費</h2>
+                <p>價格透明透明，絕無隱藏與強迫推銷費用</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-header">
+                        <span class="service-badge">基礎熱銷</span>
+                        <div class="service-prices"
+                            style="display: flex; flex-direction: column; align-items: flex-end; line-height: 1.2;">
+                            <div class="service-price" style="font-size: 2rem;">NT$120<span>男/ 次</span></div>
+                            <div class="service-price" style="font-size: 2rem; margin-top: 4px;">NT$150<span>女/ 次</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>專業極速精剪</h3>
+                    <p>適合需要維持俐落髮型、定期修剪的男士與女士，提供極致效率與俐落輪廓。</p>
+                    <ul class="service-features">
+                        <li>專屬髮型溝通</li>
+                        <li>專業吹風整理</li>
+                        <li>一次性頸帶衛生防護</li>
+                    </ul>
+                    <a href="./queue.html" class="btn btn-secondary">立即抽牌</a>
+                </div>
+
+                <div class="service-card" style="border-color: rgba(255, 123, 0, 0.3);">
+                    <div class="service-header">
+                        <span class="service-badge popular">極致享受</span>
+                        <div class="service-price">NT$20<span>/ 次</span></div>
+                    </div>
+                    <h3>方便洗</h3>
+                    <p>結合深層潔淨洗髮與精剪，徹底清除剪髮後的細小碎髮，讓您清爽離店。</p>
+                    <ul class="service-features">
+                        <li>專業極速精剪</li>
+                        <li>薄荷舒緩頭皮冷泉洗髮</li>
+                        <li>熱乾敷與造型吹整</li>
+                    </ul>
+                    <a href="./queue.html" class="btn btn-primary">熱門首選</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-header">
+                        <span class="service-badge">專業限定</span>
+                        <div class="service-price">NT$600<span>/ 次</span></div>
+                    </div>
+                    <h3>染髮</h3>
+                    <p>提供專業色彩規劃，採用低刺激進口染劑。不論是遮蓋白髮或個性單色染，皆能呈現均勻亮澤的完美髮色。</p>
+                    <ul class="service-features">
+                        <li>專屬色彩溝通與頭皮隔離防護</li>
+                        <li>進口低敏無氨染劑均勻上色</li>
+                        <li>護色受損修補洗髮與強韌滋養</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Stylists Section (設計師團隊) -->
+    <section id="stylists" class="container">
+        <div class="section-title">
+            <h2>設計師</h2>
+            <p>雖然百元，但我們為您聘用沙龍級的王牌陣容</p>
+        </div>
+
+        <div class="stylists-grid">
+            <div class="stylist-card">
+                <div class="stylist-avatar">✂👨‍🎨</div>
+                <div class="stylist-info">
+                    <div class="stylist-role">店長</div>
+                    <h3>香 Sean</h3>
+                    <!-- 店長個人介紹：專精現代剪裁與漸層工藝，字數適中以利維持 RWD 卡片版面比例 -->
+                    <p class="stylist-desc">專精於現代男士潮流剪裁、美式精細漸層（Fade）與日系空氣感紋理設計。擁有 10 年沙龍極致工藝經驗，專注於細節雕琢，為您量身打造最自信的日常髮型。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 7. Footer (頁尾聯絡資訊) -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-info">
+                <h3>SL<span>百元專業剪髮</span></h3>
+                <p>
+                    我們致力於用最高效率的動作，呈現最完美的線條美感。不需負擔高額沙龍費用，您值得擁有更專業、更精準的快剪體驗。
+                </p>
+                <ul class="contact-list">
+                    <li class="contact-item"><strong>📍 地址：</strong> 台中市北區山西路二段49號</li>
+                    <li class="contact-item"><strong>⏰ 營業時間：</strong> 週二至週六 13:30 - 21:00</li>
+                    <li class="contact-item"><strong>📞 電話：</strong> 0968-377898 (僅供現場抽號，暫無預約服務)</li>
+                </ul>
+            </div>
+
+            <!-- 模擬地圖 -->
+            <div class="footer-map" aria-label="SL剪髮店面地圖">
+                <div class="map-placeholder">
+                    <div class="map-accent-line"></div>
+                    <div class="map-accent-line-h"></div>
+                    <div class="map-pin">📍</div>
+                    山西路二段 (台中店)
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 SL 百元專業剪髮 版權所有。由 Antigravity 團隊精心設計與開發。 | <a href="admin.html"
+                    style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem;">⚙ 店長管理</a></p>
+        </div>
+    </footer>
+
+    <!-- 網頁互動邏輯 (JavaScript) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 全域錯誤防呆捕獲
+            try {
+                initHeaderScroll();
+                initMobileMenu();
+                initButtonRipples();
+            } catch (globalError) {
+                console.error('[CRITICAL] 網頁初始化失敗，請聯絡前端開發小組：', globalError);
+            }
+        });
+
+        // 1. 滾動時導覽列模糊背景切換
+        function initHeaderScroll() {
+            const header = document.getElementById('mainHeader');
+            if (!header) return;
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
+                }
+            });
+        }
+
+        // 2. 手機版收合選單邏輯 (點擊外部自動收合防呆)
+        function initMobileMenu() {
+            const navToggle = document.getElementById('menuToggleBtn');
+            const navMenu = document.getElementById('navMenuList');
+
+            if (!navToggle || !navMenu) return;
+
+            navToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = navMenu.style.display === 'flex';
+                if (isOpen) {
+                    navMenu.style.display = 'none';
+                } else {
+                    navMenu.style.display = 'flex';
+                    navMenu.style.flexDirection = 'column';
+                    navMenu.style.position = 'absolute';
+                    navMenu.style.top = '100%';
+                    navMenu.style.left = '0';
+                    navMenu.style.width = '100%';
+                    navMenu.style.backgroundColor = 'rgba(3, 105, 161, 0.98)';
+                    navMenu.style.padding = '1.5rem';
+                    navMenu.style.borderBottom = '1px solid var(--glass-border)';
+                }
+            });
+
+            // 點擊連結時自動關閉選單 (便於手機版錨點滑動)
+            navMenu.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        navMenu.style.display = 'none';
+                    }
+                });
+            });
+
+            // 點擊外面任何區域自動關閉選單
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768 && navMenu.style.display === 'flex') {
+                    if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                        navMenu.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // 3. 按鈕點擊水波紋效果 (Ripple)
+        function initButtonRipples() {
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    try {
+                        const circle = document.createElement('span');
+                        const diameter = Math.max(this.clientWidth, this.clientHeight);
+                        const radius = diameter / 2;
+
+                        circle.style.width = circle.style.height = `${diameter}px`;
+                        circle.style.left = `${e.clientX - this.getBoundingClientRect().left - radius}px`;
+                        circle.style.top = `${e.clientY - this.getBoundingClientRect().top - radius}px`;
+                        circle.classList.add('ripple');
+
+                        const ripple = this.querySelector('.ripple');
+                        if (ripple) ripple.remove();
+
+                        this.appendChild(circle);
+                    } catch (err) {
+                        console.error('[Error] 無法繪製水波紋特效：', err);
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
