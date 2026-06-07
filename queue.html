@@ -474,55 +474,7 @@
                             modalEstTimeVal.innerHTML = `${Math.ceil(diff * 15)} <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">分鐘</span>`;
                         }
                     }
-                </script>dal.classList.remove('show');
-                activeTicketNum = null; // 重置作用中的號碼牌號碼
-                setTimeout(() => {
-                modal.style.display = 'none';
-                try {
-                if (window.location.protocol !== 'file:') {
-                const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-                window.history.replaceState({path: cleanUrl}, '', cleanUrl);
-                }
-                } catch (historyError) {
-                console.warn('[Warning] 本機環境限制，無法重寫歷史紀錄參數：', historyError);
-                }
-                }, 400);
-                });
-                }
-
-                // 重整狀態按鈕 (讀取後台最新狀態，不再使用隨機叫號)
-                const btnModalRefresh = document.getElementById('btnModalRefresh');
-                if (btnModalRefresh) {
-                btnModalRefresh.addEventListener('click', () => {
-                const current = parseInt(localStorage.getItem('sl_current_calling') || DEFAULT_CURRENT, 10);
-                modalCurrentCall.textContent = current;
-                updateModalStatus(ticketNum, current);
-                });
-                }
-                }
-
-                // 輔助更新計算 Modal 狀態與剩餘人數 (Error Handling 與防呆)
-                function updateModalStatus(tNum, cCall) {
-                const modalWaitingCount = document.getElementById('modalWaitingCount');
-                const modalEstTimeVal = document.getElementById('modalEstTimeVal');
-
-                if (!modalWaitingCount || !modalEstTimeVal) return;
-
-                const designers = 1;
-                const waitPerPerson = 15;
-
-                if (tNum < cCall) { modalWaitingCount.textContent='已過號' ; modalWaitingCount.style.color='#ef4444' ;
-                    modalEstTimeVal.innerHTML='0 <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">(請至櫃檯)</span>'
-                    ; } else if (tNum===cCall) { modalWaitingCount.textContent='輪到您了！' ;
-                    modalWaitingCount.style.color='#10b981' ;
-                    modalEstTimeVal.innerHTML='0 <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">分鐘</span>'
-                    ; } else { const diff=tNum - cCall; modalWaitingCount.textContent=`${diff} 人`;
-                    modalWaitingCount.style.color='#0f172a' ; const waitTime=Math.ceil((diff / designers) *
-                    waitPerPerson); modalEstTimeVal.innerHTML=`${waitTime} <span
-                    style="font-size:0.9rem; font-weight:normal; color:#64748b;">分鐘</span>`;
-                    }
-                    }
-                    </script>
+                </script>
 </body>
 
 </html>
