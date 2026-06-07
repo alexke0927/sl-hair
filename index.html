@@ -1,76 +1,99 @@
 <!DOCTYPE html>
+<!-- lang="zh-Hant" 告訴瀏覽器這個網頁的語言是「繁體中文」 -->
 <html lang="zh-Hant">
 
 <head>
+    <!-- 設定網頁編碼為 UTF-8，確保中文字不會變成亂碼 -->
     <meta charset="UTF-8">
+    <!-- 設定 viewport 讓網頁可以在手機等行動裝置上正常縮放排版 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 網頁標題，會顯示在瀏覽器的標籤頁上 -->
     <title>SL百元專業剪髮 | 極速、平價、時尚沙龍</title>
 
-    <!-- SEO 與 Meta 設定 -->
+    <!-- SEO 與 Meta 設定：幫助 Google 搜尋引擎了解這個網頁在做什麼 -->
     <meta name="description" content="SL百元專業剪髮提供最快、最專業的男士女士剪髮服務。只需120元，由擁有多年沙龍經驗的設計師為您量身打造完美輪廓。本站提供線上號碼牌即時等候時間估算。">
+    <!-- 關鍵字設定，當有人搜尋這些字時比較容易找到我們 -->
     <meta name="keywords" content="SL剪髮, 百元剪髮, 快速剪髮, 台北剪髮, 平價沙龍, 排隊叫號">
 
-    <!-- 引入美觀的字體 Outfit 與 Noto Sans TC -->
+    <!-- 引入 Google Fonts 提供的漂亮字體 (Outfit 負責英文與數字，Noto Sans TC 負責中文) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;700&display=swap"
         rel="stylesheet">
 
-    <!-- 網頁視覺樣式設計 (CSS) -->
+    <!-- 網頁視覺樣式設計 (CSS)：連結到我們自己寫的 style.css 檔案 -->
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-    <!-- 背景裝飾微光 -->
+    <!-- 這是畫面背景的裝飾微光效果 (透過 CSS 畫出的模糊圓形) -->
     <div class="ambient-glow glow-1"></div>
     <div class="ambient-glow glow-2"></div>
     <div class="ambient-glow glow-3"></div>
 
-    <!-- 1. Header (導覽列) -->
+    <!-- 1. Header (導覽列區塊) -->
+    <!-- header 標籤代表網頁頂部的區塊，id="mainHeader" 是為了讓 JavaScript 找得到它 -->
     <header class="header" id="mainHeader">
         <div class="nav-container">
+            <!-- 點擊 Logo 會透過 #home 滑動到網頁最上方 -->
             <a href="#home" class="logo" id="navLogo">
                 SL<span>百元專業剪髮</span>
             </a>
 
+            <!-- 手機版才會出現的「漢堡選單按鈕」 -->
             <button class="nav-toggle" id="menuToggleBtn" aria-label="切換選單">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
 
+            <!-- 導覽列右側的選單連結清單 -->
             <ul class="nav-menu" id="navMenuList">
+                <!-- href="#名稱" 會在同一個網頁內平滑滑動到指定的區塊 -->
                 <li><a href="#home" class="nav-link">首頁</a></li>
                 <li><a href="#features" class="nav-link">服務特色</a></li>
                 <li><a href="#services" class="nav-link">收費標準</a></li>
                 <li><a href="#stylists" class="nav-link">專業團隊</a></li>
+                <!-- 這些是連到其他網頁的連結 -->
                 <li><a href="./queue.html" class="nav-link">排隊估算</a></li>
+                <!-- 加了 class="btn btn-primary" 讓這個連結看起來像一個顯眼的按鈕 -->
                 <li><a href="./queue.html" class="btn btn-primary" id="headerCtaBtn">即時抽牌</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- 2. Hero Section (主視覺看板) -->
+    <!-- 2. Hero Section (主視覺看板區塊，通常是一進網頁看到的第一個大畫面) -->
+    <!-- id="home" 對應導覽列的連結，讓導覽列可以捲動到這裡 -->
     <section id="home" class="hero">
         <div class="container hero-grid">
+            <!-- 左側文字區 -->
             <div class="hero-content">
+                <!-- 品牌標語 -->
                 <div class="hero-tagline">
                     ⚡ 快速・平價・不妥協的品質
                 </div>
+                <!-- 大標題，<br> 代表換行，<span>用來單獨改變「代價」這兩個字的顏色 -->
                 <h1>專業，<br>不需昂貴的<span>代價</span></h1>
+                <!-- 品牌簡介 -->
                 <p>
                     「SL百元專業剪髮」結合了現代極速理念與精湛剪髮工藝。我們提供俐落、乾淨且充滿時尚感的剪髮服務，讓您在 10 分鐘內煥然一新。
                 </p>
+                <!-- 兩個行動呼籲按鈕 (Call to Action) -->
                 <div class="hero-actions">
+                    <!-- 連接到排隊頁面 -->
                     <a href="./queue.html" class="btn btn-primary">查詢叫號進度</a>
+                    <!-- 滑動到下方的收費標準區塊 -->
                     <a href="#services" class="btn btn-secondary">瀏覽服務項目</a>
                 </div>
             </div>
 
+            <!-- 右側視覺圖形區 (用 CSS 畫出的立體幾何圖形) -->
             <div class="hero-visual">
+                <!-- 框線裝飾 -->
                 <div class="visual-outline"></div>
+                <!-- 實體的色塊 -->
                 <div class="visual-solid">
                     <div class="visual-icon">✂</div>
                     <div class="visual-label">專業快速剪</div>
@@ -80,20 +103,24 @@
         </div>
     </section>
 
-    <!-- 3. Features Section (服務特色) -->
+    <!-- 3. Features Section (服務特色區塊) -->
     <section id="features" class="container">
+        <!-- 區塊標題 -->
         <div class="section-title">
             <h2>為什麼選擇 SL 剪髮？</h2>
             <p>打破您對傳統百元剪髮的刻板印象，重塑您的理髮體驗</p>
         </div>
 
+        <!-- 使用 CSS Grid 排列的兩個特色卡片 -->
         <div class="features-grid">
+            <!-- 第一個特色卡片 -->
             <div class="feature-card">
                 <div class="feature-icon">✨</div>
                 <h3>不求快，只為讓你滿意</h3>
                 <p>我們專注於每一處細節的雕琢，不因平價而壓縮理髮時間，細心為您剪出最滿意的自信輪廓。</p>
             </div>
 
+            <!-- 第二個特色卡片 -->
             <div class="feature-card">
                 <div class="feature-icon">💖</div>
                 <h3>真心實意的為你設計</h3>
@@ -102,7 +129,7 @@
         </div>
     </section>
 
-    <!-- 4. Services & Pricing (收費標準) -->
+    <!-- 4. Services & Pricing (收費標準區塊) -->
     <section id="services" class="services">
         <div class="container">
             <div class="section-title">
@@ -110,10 +137,14 @@
                 <p>價格透明透明，絕無隱藏與強迫推銷費用</p>
             </div>
 
+            <!-- 使用 CSS Grid 橫向排列三個價目表卡片 -->
             <div class="services-grid">
+                <!-- 價目卡片 1：基礎熱銷 -->
                 <div class="service-card">
                     <div class="service-header">
+                        <!-- 卡片左上角的小標籤 -->
                         <span class="service-badge">基礎熱銷</span>
+                        <!-- 價格顯示區 -->
                         <div class="service-prices"
                             style="display: flex; flex-direction: column; align-items: flex-end; line-height: 1.2;">
                             <div class="service-price" style="font-size: 2rem;">NT$120<span>男/ 次</span></div>
@@ -123,6 +154,7 @@
                     </div>
                     <h3>專業極速精剪</h3>
                     <p>適合需要維持俐落髮型、定期修剪的男士與女士，提供極致效率與俐落輪廓。</p>
+                    <!-- 包含項目的清單 -->
                     <ul class="service-features">
                         <li>專屬髮型溝通</li>
                         <li>專業吹風整理</li>
@@ -131,6 +163,7 @@
                     <a href="./queue.html" class="btn btn-secondary">立即抽牌</a>
                 </div>
 
+                <!-- 價目卡片 2：極致享受 (特別加上橘色邊框突顯) -->
                 <div class="service-card" style="border-color: rgba(255, 123, 0, 0.3);">
                     <div class="service-header">
                         <span class="service-badge popular">極致享受</span>
@@ -146,6 +179,7 @@
                     <a href="./queue.html" class="btn btn-primary">熱門首選</a>
                 </div>
 
+                <!-- 價目卡片 3：專業限定 -->
                 <div class="service-card">
                     <div class="service-header">
                         <span class="service-badge">專業限定</span>
@@ -163,7 +197,7 @@
         </div>
     </section>
 
-    <!-- 5. Stylists Section (設計師團隊) -->
+    <!-- 5. Stylists Section (設計師團隊區塊) -->
     <section id="stylists" class="container">
         <div class="section-title">
             <h2>設計師</h2>
@@ -172,11 +206,12 @@
 
         <div class="stylists-grid">
             <div class="stylist-card">
+                <!-- 虛擬頭像圖示 -->
                 <div class="stylist-avatar">✂👨‍🎨</div>
                 <div class="stylist-info">
                     <div class="stylist-role">店長</div>
                     <h3>香 Sean</h3>
-                    <!-- 店長個人介紹：專精現代剪裁與漸層工藝，字數適中以利維持 RWD 卡片版面比例 -->
+                    <!-- 店長個人介紹 -->
                     <p class="stylist-desc">專精於現代男士潮流剪裁、美式精細漸層（Fade）與日系空氣感紋理設計。擁有 10 年沙龍極致工藝經驗，專注於細節雕琢，為您量身打造最自信的日常髮型。
                     </p>
                 </div>
@@ -184,23 +219,25 @@
         </div>
     </section>
 
-
-    <!-- 7. Footer (頁尾聯絡資訊) -->
+    <!-- 7. Footer (頁尾聯絡資訊區塊) -->
     <footer class="footer">
         <div class="container footer-grid">
+            <!-- 左側文字聯絡資訊 -->
             <div class="footer-info">
                 <h3>SL<span>百元專業剪髮</span></h3>
                 <p>
                     我們致力於用最高效率的動作，呈現最完美的線條美感。不需負擔高額沙龍費用，您值得擁有更專業、更精準的快剪體驗。
                 </p>
                 <ul class="contact-list">
+                    <!-- strong 標籤會讓裡面的文字變粗體 -->
                     <li class="contact-item"><strong>📍 地址：</strong> 台中市北區山西路二段49號</li>
                     <li class="contact-item"><strong>⏰ 營業時間：</strong> 週二至週六 13:30 - 21:00</li>
                     <li class="contact-item"><strong>📞 電話：</strong> 0968-377898 (僅供現場抽號，暫無預約服務)</li>
                 </ul>
             </div>
 
-            <!-- 真實 Google Maps 嵌入 -->
+            <!-- 右側 Google Maps 嵌入區塊 -->
+            <!-- iframe 標籤可以在網頁裡面挖一個洞，用來顯示另一個網頁(這裡是 Google地圖) -->
             <div class="footer-map" aria-label="SL剪髮店面地圖" style="overflow: hidden;">
                 <iframe 
                     width="100%" 
@@ -213,17 +250,25 @@
             </div>
         </div>
 
+        <!-- 網頁最底部的版權宣告列 -->
         <div class="footer-bottom">
-            <p>&copy; 2026 SL 百元專業剪髮 版權所有。由 Antigravity 團隊精心設計與開發。 | <a href="admin.html"
-                    style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem;">⚙ 店長管理</a></p>
+            <!-- &copy; 是一個特殊的 HTML 代碼，會顯示版權符號 © -->
+            <p>&copy; 2026 SL 百元專業剪髮 版權所有。由 Antigravity 團隊精心設計與開發。 | 
+                <!-- 隱藏在角落的店長後台登入連結 -->
+                <a href="admin.html" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem;">⚙ 店長管理</a>
+            </p>
         </div>
     </footer>
 
-    <!-- 網頁互動邏輯 (JavaScript) -->
+    <!-- ==========================================
+         網頁互動邏輯 (內嵌 JavaScript)
+         ========================================== -->
     <script>
+        // DOMContentLoaded 代表等網頁 HTML 全部讀取完再執行，避免抓不到元素報錯
         document.addEventListener('DOMContentLoaded', () => {
-            // 全域錯誤防呆捕獲
+            // try-catch 防護罩，避免程式錯誤導致整個畫面當掉
             try {
+                // 啟動以下三個自訂函式
                 initHeaderScroll();
                 initMobileMenu();
                 initButtonRipples();
@@ -232,82 +277,97 @@
             }
         });
 
-        // 1. 滾動時導覽列模糊背景切換
+        // 1. 滾動時導覽列變色函式
         function initHeaderScroll() {
-            const header = document.getElementById('mainHeader');
-            if (!header) return;
+            const header = document.getElementById('mainHeader'); // 抓出 id="mainHeader" 的元素
+            if (!header) return; // 抓不到就終止
 
+            // 監聽網頁捲動事件
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('header-scrolled');
+                if (window.scrollY > 50) { // 如果網頁往下捲動超過 50 像素
+                    header.classList.add('header-scrolled'); // 幫它加上深色背景的 class
                 } else {
-                    header.classList.remove('header-scrolled');
+                    header.classList.remove('header-scrolled'); // 恢復透明
                 }
             });
         }
 
-        // 2. 手機版收合選單邏輯 (點擊外部自動收合防呆)
+        // 2. 手機版收合選單邏輯 (漢堡按鈕)
         function initMobileMenu() {
-            const navToggle = document.getElementById('menuToggleBtn');
-            const navMenu = document.getElementById('navMenuList');
+            const navToggle = document.getElementById('menuToggleBtn'); // 漢堡按鈕
+            const navMenu = document.getElementById('navMenuList');     // 隱藏的選單清單
 
-            if (!navToggle || !navMenu) return;
+            if (!navToggle || !navMenu) return; // 找不到就不執行
 
+            // 點擊漢堡按鈕時觸發
             navToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // 阻止點擊事件擴散到整個網頁
+                
+                // 檢查目前是否為打開狀態
                 const isOpen = navMenu.style.display === 'flex';
                 if (isOpen) {
-                    navMenu.style.display = 'none';
+                    navMenu.style.display = 'none'; // 隱藏
                 } else {
+                    // 打開選單，並強制加上一堆排版 CSS 設定
                     navMenu.style.display = 'flex';
-                    navMenu.style.flexDirection = 'column';
-                    navMenu.style.position = 'absolute';
-                    navMenu.style.top = '100%';
+                    navMenu.style.flexDirection = 'column'; // 直排
+                    navMenu.style.position = 'absolute';    // 浮動定位
+                    navMenu.style.top = '100%';             // 在導覽列的正下方
                     navMenu.style.left = '0';
-                    navMenu.style.width = '100%';
-                    navMenu.style.backgroundColor = 'rgba(3, 105, 161, 0.98)';
+                    navMenu.style.width = '100%';           // 全螢幕寬度
+                    navMenu.style.backgroundColor = 'rgba(3, 105, 161, 0.98)'; // 設定藍色背景
                     navMenu.style.padding = '1.5rem';
                     navMenu.style.borderBottom = '1px solid var(--glass-border)';
                 }
             });
 
-            // 點擊連結時自動關閉選單 (便於手機版錨點滑動)
+            // 點擊選單內的任何連結時，自動幫客人把選單關起來 (避免選單擋住畫面)
             navMenu.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768) {
+                    if (window.innerWidth <= 768) { // 只在手機螢幕寬度時執行
                         navMenu.style.display = 'none';
                     }
                 });
             });
 
-            // 點擊外面任何區域自動關閉選單
+            // 點擊畫面外面的任何地方，如果選單是開著的，就自動關閉它
             document.addEventListener('click', (e) => {
+                // 確定目前是手機寬度而且選單是打開的
                 if (window.innerWidth <= 768 && navMenu.style.display === 'flex') {
+                    // 如果點擊的地方既不是選單裡面，也不是漢堡按鈕
                     if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-                        navMenu.style.display = 'none';
+                        navMenu.style.display = 'none'; // 關閉選單
                     }
                 }
             });
         }
 
         // 3. 按鈕點擊水波紋效果 (Ripple)
+        // 這個特效會在按鈕裡面畫一個圓形，然後透過 CSS 放大變透明，製造水波漣漪的感覺
         function initButtonRipples() {
+            // 找出網頁上所有套用 .btn 的按鈕
             const buttons = document.querySelectorAll('.btn');
             buttons.forEach(button => {
+                // 為每顆按鈕綁定點擊事件
                 button.addEventListener('click', function (e) {
                     try {
-                        const circle = document.createElement('span');
+                        const circle = document.createElement('span'); // 產生一個空的 <span> 標籤
+                        // 計算圓形的直徑要多大 (拿按鈕寬或高最大的一邊)
                         const diameter = Math.max(this.clientWidth, this.clientHeight);
-                        const radius = diameter / 2;
+                        const radius = diameter / 2; // 計算半徑
 
+                        // 設定圓形的大小
                         circle.style.width = circle.style.height = `${diameter}px`;
+                        // 根據滑鼠點擊螢幕的 XY 座標，減去按鈕本身在螢幕上的 XY 座標，算出圓形要出現的中心點
                         circle.style.left = `${e.clientX - this.getBoundingClientRect().left - radius}px`;
                         circle.style.top = `${e.clientY - this.getBoundingClientRect().top - radius}px`;
-                        circle.classList.add('ripple');
+                        circle.classList.add('ripple'); // 加上 ripple class 來啟動 CSS 動畫
 
+                        // 先把前一次點擊產生的舊水波紋清掉，避免累積太多造成網頁卡頓
                         const ripple = this.querySelector('.ripple');
                         if (ripple) ripple.remove();
 
+                        // 把畫好的圓形加到按鈕裡面
                         this.appendChild(circle);
                     } catch (err) {
                         console.error('[Error] 無法繪製水波紋特效：', err);

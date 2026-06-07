@@ -5,13 +5,13 @@
 <head>
     <!-- 設定網頁編碼為 UTF-8，確保中文字不會變成亂碼 -->
     <meta charset="UTF-8">
-    <!-- 設定 viewport 讓網頁可以在手機上正常縮放 -->
+    <!-- 設定 viewport 讓網頁可以在手機或平板機台上正常縮放 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 網頁標題 -->
-    <title>即時叫號與自助取號 | SL百元專業剪髮</title>
+    <title>現場自助取號機 | SL百元專業剪髮</title>
 
     <!-- SEO 網站描述與關鍵字 -->
-    <meta name="description" content="SL百元專業剪髮提供線上號碼牌即時等候時間估算與自助取號服務。免現場空等！線上抽號或輸入號碼牌，自動估計您還需等候多久。">
+    <meta name="description" content="SL百元專業剪髮現場自助取號機。">
     <meta name="keywords" content="SL剪髮, 百元剪髮, 快速剪髮, 排隊叫號, 自助取號, 線上號碼牌">
 
     <!-- 引入 Google Fonts 漂亮的英數與中文字體 -->
@@ -21,7 +21,7 @@
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;700&display=swap"
         rel="stylesheet">
 
-    <!-- 引入 CSS 樣式表。style.css 是共用基礎樣式，queue_styles.css 是這個排隊網頁專用的樣式 -->
+    <!-- 引入 CSS 樣式表。style.css 是共用基礎樣式，queue_styles.css 是排隊相關的共用樣式 -->
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./queue_styles.css">
 </head>
@@ -32,28 +32,23 @@
     <div class="ambient-glow glow-2"></div>
     <div class="ambient-glow glow-3"></div>
 
-    <!-- 簡化版的導覽列 (只有 Logo 和返回首頁的按鈕) -->
+    <!-- 簡化版的導覽列 (Kiosk 是實體機台，不需要返回按鈕，以免客人亂按跳走) -->
     <header class="header" id="mainHeader">
         <div class="nav-container">
-            <!-- 點擊 Logo 回到首頁 -->
             <a href="index.html" class="logo">
                 SL<span>百元專業剪髮</span>
             </a>
-            <!-- 返回首頁的按鈕 -->
-            <a href="index.html" class="btn btn-secondary"
-                style="padding: 0.5rem 1.5rem; font-size: 0.9rem; border-radius: 20px; border-color: rgba(255,255,255,0.4);">
-                返回首頁 ↩
-            </a>
+            <!-- Kiosk 無需返回按鈕 -->
         </div>
     </header>
 
-    <!-- queue-wrapper 是把整個排隊畫面包起來的大容器，讓它能在畫面中間垂直置中 -->
+    <!-- queue-wrapper 是把整個畫面包起來的大容器，讓它能在畫面中間垂直置中 -->
     <main class="queue-wrapper">
         <div class="container">
             <!-- 網頁標題區塊 -->
             <div class="section-title">
-                <h2>即時叫號與自助取號</h2>
-                <p>免現場空等！線上抽號或輸入號碼牌，自動估計您還需等候多久</p>
+                <h2>現場自助取號機</h2>
+                <p>點擊取號，並使用手機掃描票面上的 QR Code 即可隨時追蹤進度！</p>
             </div>
 
             <!-- queue-container 是中間那塊帶有玻璃模糊質感的半透明大卡片 -->
@@ -63,7 +58,7 @@
                     <!-- 第一格：顯示當前叫號 -->
                     <div class="status-node">
                         <div class="status-node-title">當前現場叫號</div>
-                        <div class="status-node-value" id="currentCallText">--</div> <!-- id="currentCallText" 讓 JavaScript 等下把數字填進來 -->
+                        <div class="status-node-value" id="currentCallText">--</div>
                     </div>
                     <!-- 第二格：顯示等候人數 -->
                     <div class="status-node">
@@ -83,7 +78,7 @@
                     <div class="queue-box dispenser-box">
                         <h3>🎟 自助號碼機</h3>
                         <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-                            點擊按鈕抽取號碼牌，系統將自動為您估算時間並追蹤進度。
+                            點擊按鈕抽取號碼牌，掃描票面上專屬 QR Code 可在手機上即時追蹤最新排隊進度。
                         </p>
 
                         <!-- ticket-machine 號碼機的外觀 -->
@@ -99,12 +94,15 @@
 
                             <!-- ticket-paper 是從縫隙掉出來的那張白色票卡 (預設隱藏) -->
                             <div class="ticket-paper" id="ticketPaper">
-                                <!-- 票卡上的 Logo -->
                                 <div class="ticket-logo">SL 百元專業剪髮</div>
                                 <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 2px;">您的排隊號碼為</p>
                                 <!-- 票卡上的巨大號碼 -->
                                 <div class="ticket-number" id="dispensedNumber">--</div>
-                                <!-- 票卡底部的取號時間 -->
+                                
+                                <!-- 【Kiosk 專屬】：用來顯示 QR Code 的區塊 -->
+                                <div id="qrCodeContainer" style="margin: 10px 0;"></div>
+                                <p style="font-size: 0.75rem; color: #64748b; text-align: center;">掃描 QR Code<br>即時追蹤叫號進度</p>
+                                
                                 <div class="ticket-time" id="dispenseTimeText">取號時間: --:--</div>
                             </div>
                         </div>
@@ -121,7 +119,7 @@
                         <form class="queue-form" id="queueForm" novalidate>
                             <div class="form-group">
                                 <label for="ticketNumber">請輸入您的號碼牌號碼</label>
-                                <!-- autocomplete="off" 防止瀏覽器跳出之前輸入過的奇怪紀錄 -->
+                                <!-- autocomplete="off" 防止機台跳出別人輸入過的號碼 -->
                                 <input type="text" id="ticketNumber" class="form-input" placeholder="例如: 18" autocomplete="off" required>
                                 <!-- 隱藏的紅色錯誤訊息區塊 -->
                                 <div class="error-msg" id="inputError"></div>
@@ -154,43 +152,7 @@
         </div>
     </footer>
 
-    <!-- ==========================================================================
-         掃碼或抽號後彈出的「專屬票券狀態視窗」(Modal)
-         這是一個覆蓋在整個網頁上的半透明藍色畫面
-         ========================================================================== -->
-    <div class="ticket-modal" id="ticketModal">
-        <div class="ticket-modal-content">
-            <div class="modal-ticket-title">SL百元專業剪髮・排隊憑證</div>
-            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 2px;">您的號碼牌號碼</p>
-            <!-- 你的號碼 -->
-            <div class="modal-ticket-num" id="modalTicketNum">--</div>
-
-            <div class="modal-status-grid">
-                <div class="modal-status-item">
-                    <div class="modal-status-lbl">目前叫號</div>
-                    <!-- 櫃台叫到幾號 -->
-                    <div class="modal-status-val" id="modalCurrentCall">--</div>
-                </div>
-                <div class="modal-status-item">
-                    <div class="modal-status-lbl">前方等待人數</div>
-                    <!-- 前面還有幾個人 -->
-                    <div class="modal-status-val" id="modalWaitingCount" style="font-weight: 800;">--</div>
-                </div>
-            </div>
-
-            <!-- 預估要等幾分鐘 -->
-            <div class="modal-time-est" style="margin-top: 1.5rem; background: rgba(3, 105, 161, 0.05); padding: 1rem; border-radius: 12px; border: 1px dashed rgba(3, 105, 161, 0.2);">
-                <div style="font-size: 0.85rem; color: #075985; font-weight: 700; margin-bottom: 0.5rem;">預估等候時間</div>
-                <div id="modalEstTimeVal" style="font-size: 2.5rem; font-weight: 800; color: #0369a1; line-height: 1;">--</div>
-            </div>
-
-            <!-- 重新整理按鈕 (使用者不用自己拉網頁重新整理) -->
-            <button class="btn btn-secondary" id="btnModalRefresh" style="width: 100%; margin-top: 1.5rem; border-radius: 12px;">🔄 點擊重新整理最新狀態</button>
-            
-            <!-- 如果發現號碼已經過了，這個紅色的重新抽號按鈕才會跑出來 -->
-            <button class="btn" id="btnModalRedraw" style="width: 100%; margin-top: 1rem; border-radius: 12px; background-color: #ef4444; color: white; display: none;">⚠️ 已過號，點此重新抽號</button>
-        </div>
-    </div>
+    <!-- Kiosk 機台是共用的，所以不使用個人專屬的 Modal 彈窗 -->
 
     <!-- 引入 Firebase SDK (雲端資料庫工具) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -218,7 +180,7 @@
             db = firebase.database();
         }
 
-        // 記錄目前畫面上這個使用者自己抽到的號碼是幾號 (預設是 null 沒有號碼)
+        // 雖然 Kiosk 沒有個人 Modal，但保留這個變數以防日後擴充
         let activeTicketNum = null;
 
         // 全域狀態暫存：把資料庫上的最新數字存起來
@@ -246,7 +208,6 @@
                 initButtonRipples();      // 啟動按鈕水波紋
                 initQueueCalculator();    // 啟動查詢表單
                 initTicketDispenser();    // 啟動抽號碼機
-                checkUrlParams();         // 檢查是不是從 QR Code 掃描進來的
 
                 if (db) {
                     initFirebase();       // 開始連線資料庫
@@ -282,7 +243,7 @@
                     };
                     updateDOM(); // 更新網頁上的數字
                 } else {
-                    resetDailyData(); // 如果雲端沒資料，就塞零進去
+                    resetDailyData(); // 首次初始化
                 }
             });
         }
@@ -297,9 +258,7 @@
                 latest_ticket: 0,
                 last_date: getTodayDateString()
             });
-            // 順便把手機裡存的「自己的號碼」洗掉，因為新的一天開始了
-            localStorage.removeItem('sl_my_ticket_number');
-            localStorage.removeItem('sl_my_ticket_time');
+            // Kiosk 不使用 localStorage，所以這裡不用清
         }
 
         // 把 globalState 裡的最新的數字寫到網頁標籤裡面
@@ -311,16 +270,6 @@
             if (currentCallText) currentCallText.textContent = globalState.current_calling;
             if (waitingCountText) waitingCountText.textContent = globalState.waiting_count;
             if (totalServedText) totalServedText.textContent = globalState.total_served;
-
-            // 如果使用者的「彈出視窗(Modal)」正開著，也要一併更新裡面的數字，這樣不用手動重新整理也會看到號碼往前跳
-            const modal = document.getElementById('ticketModal');
-            if (modal && modal.classList.contains('show') && activeTicketNum !== null) {
-                const modalCurrentCall = document.getElementById('modalCurrentCall');
-                if (modalCurrentCall) modalCurrentCall.textContent = globalState.current_calling;
-                
-                // 呼叫函式來計算「前方等待人數」和「還要等多久」
-                updateModalStatus(activeTicketNum, globalState.current_calling);
-            }
         }
 
         // 導覽列捲動變色
@@ -394,17 +343,13 @@
                     const diff = ticketNum - globalState.current_calling;
                     
                     if (diff === 0) {
-                        // 如果差 0 個人，代表現在就是叫到他
                         timeValueText.innerHTML = '0 <span>分鐘 (輪到您了！)</span>';
                         timeValueText.style.color = '#ffffff';
                     } else {
-                        // 每個人抓 15 分鐘，計算預估等待時間
                         const estimatedWaitTime = Math.ceil(diff * 15);
                         timeValueText.innerHTML = `${estimatedWaitTime} <span>分鐘</span>`;
-                        // 如果等超過 40 分鐘，把字變成橘色警告他可以先去逛街
                         timeValueText.style.color = estimatedWaitTime > 40 ? 'var(--color-orange-alert)' : '#ffffff';
                     }
-                    // 把結果區塊用動畫彈出來顯示
                     resultDiv.classList.add('show');
                 } catch (calcError) { }
             });
@@ -413,7 +358,7 @@
             function showInputError(msg) {
                 inputError.textContent = `⚠ ${msg}`;
                 inputError.style.display = 'flex';
-                ticketInput.focus(); // 把游標自動放回輸入框，讓他可以直接重打
+                ticketInput.focus();
             }
         }
 
@@ -422,7 +367,6 @@
             const btnDispense = document.getElementById('btnDispense');
             const ticketPaper = document.getElementById('ticketPaper');
             const dispensedNumberText = document.getElementById('dispensedNumber');
-            const ticketQrImg = document.getElementById('ticketQrImg');
             const dispenseTimeText = document.getElementById('dispenseTimeText');
 
             if (!btnDispense || !ticketPaper) return;
@@ -435,188 +379,54 @@
                     return;
                 }
 
-                // 透過 transaction(事務處理) 來確保兩個人同時按取號，號碼不會重複，會排隊處理
+                // 透過 transaction(事務處理) 來確保多人同時按取號，號碼不會重複
                 const queueRef = db.ref('queueStatus');
                 queueRef.transaction((currentData) => {
                     if (currentData === null) return currentData;
-                    // 等待人數 +1
                     currentData.waiting_count = (currentData.waiting_count || 0) + 1;
-                    // 最新號碼牌號碼 +1
                     currentData.latest_ticket = (currentData.latest_ticket || 0) + 1;
-                    return currentData; // 把更新後的數據還回去
+                    return currentData; 
                 }, (error, committed, snapshot) => {
-                    // 這個 callback 會在寫入成功或失敗後執行
                     if (error) {
                         console.error('取號失敗：', error);
                     } else if (committed) {
                         const newData = snapshot.val();
-                        const newTicketNumber = newData.latest_ticket; // 抓出我剛剛抽到的號碼是幾號
+                        const newTicketNumber = newData.latest_ticket; // 我剛剛抽到的號碼
 
-                        dispensedNumberText.textContent = newTicketNumber; // 印在畫面的虛擬票卡上
+                        dispensedNumberText.textContent = newTicketNumber; 
                         
                         // 取得現在的時間並格式化
                         const now = new Date();
                         const timeHtml = `日期: 民國 ${now.getFullYear() - 1911} 年 ${now.getMonth() + 1} 月 ${now.getDate()} 日<br>時間: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`;
                         dispenseTimeText.innerHTML = timeHtml;
 
+                        // 【Kiosk 專屬】：利用 Google Chart API 自動產生一組帶有專屬號碼的 QR Code 圖片
+                        const qrContainer = document.getElementById('qrCodeContainer');
+                        if (qrContainer) {
+                            // 算出客人的手機要連到哪個網址 (連到 queue.html，並且網址後面帶上 ?ticket=他的號碼)
+                            let baseHtmlUrl = window.location.protocol + "//" + window.location.host;
+                            let currentPath = window.location.pathname.replace('kiosk.html', 'queue.html');
+                            const trackingUrl = baseHtmlUrl + currentPath + "?ticket=" + newTicketNumber;
+                            // 把網址塞進 Google API 產生圖片
+                            qrContainer.innerHTML = `<img src="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=${encodeURIComponent(trackingUrl)}" alt="QR Code" style="border: 2px solid #e2e8f0; border-radius: 8px; padding: 4px; background: white;">`;
+                        }
+
                         // 用動畫讓票卡吐出來，並把按鈕藏起來
                         ticketPaper.style.display = 'flex';
                         btnDispense.style.display = 'none';
 
-                        // 1. 將號碼存入手機本機(localStorage)，這樣他不小心關掉網頁，再打開還是知道自己是幾號
-                        localStorage.setItem('sl_my_ticket_number', newTicketNumber);
-
-                        // 2. 設定 3 秒後，自動彈出全螢幕的「即時追蹤進度」視窗，讓他看個清楚
+                        // 【Kiosk 專屬】：因為這是共用機台，所以不把號碼存進 localStorage。
+                        // 給客人 10 秒鐘的時間拿手機掃描 QR Code，10 秒後機台自動恢復原狀讓下一個人按
                         setTimeout(() => {
-                            showTicketModal(newTicketNumber);
-                        }, 3000);
+                            ticketPaper.style.display = 'none'; // 把票收起來
+                            btnDispense.style.display = 'inline-flex'; // 按鈕重新出現
+                        }, 10000); // 10000 毫秒 = 10 秒
                     }
                 });
             });
         }
 
-        // 檢查網址有沒有帶號碼，或是手機裡有沒有之前抽過的號碼
-        function checkUrlParams() {
-            // 解析網址上的參數 (例如 queue.html?ticket=12)
-            const urlParams = new URLSearchParams(window.location.search);
-            const ticketVal = urlParams.get('ticket'); // 抓出 ticket 的值
-            
-            if (ticketVal) {
-                // 如果是從現場店面掃 QR Code 進來的，網址會有 ticket=xx
-                const ticketNum = parseInt(ticketVal, 10);
-                if (!isNaN(ticketNum) && ticketNum > 0) {
-                    localStorage.setItem('sl_my_ticket_number', ticketNum); // 幫他存到手機裡
-                    showTicketModal(ticketNum); // 直接跳出他的狀態視窗
-                    hideDispenseBtn();          // 把取號按鈕藏起來，避免他重複抽
-                }
-            } else {
-                // 如果網址沒有帶參數，那就檢查手機的 localStorage 裡面有沒有之前存過的號碼
-                const savedTicket = localStorage.getItem('sl_my_ticket_number');
-                if (savedTicket) {
-                    // 如果有，也一樣跳出狀態視窗
-                    showTicketModal(parseInt(savedTicket, 10));
-                    hideDispenseBtn();
-                }
-            }
-        }
-
-        // 隱藏取號按鈕的小工具
-        function hideDispenseBtn() {
-            const btnDispense = document.getElementById('btnDispense');
-            if (btnDispense) btnDispense.style.display = 'none';
-        }
-
-        // 顯示全螢幕「即時追蹤」視窗的函式
-        function showTicketModal(ticketNum) {
-            activeTicketNum = ticketNum; // 記錄這個人是幾號，這樣資料庫更新時才知道要算誰的距離
-            const modal = document.getElementById('ticketModal');
-            const modalTicketNum = document.getElementById('modalTicketNum');
-            const modalCurrentCall = document.getElementById('modalCurrentCall');
-
-            if (!modal) return;
-
-            // 先把號碼填進去
-            modalTicketNum.textContent = ticketNum;
-            modalCurrentCall.textContent = globalState.current_calling;
-            updateModalStatus(ticketNum, globalState.current_calling); // 計算還要等多久
-
-            // 啟動淡入動畫
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('show'), 10);
-
-            // 當按下「關閉」按鈕時 (注意：queue.html 裡沒有寫叉叉按鈕，但如果未來有的話)
-            const btnModalClose = document.getElementById('btnModalClose');
-            if (btnModalClose) {
-                btnModalClose.onclick = () => {
-                    modal.classList.remove('show');
-                    activeTicketNum = null;
-                    setTimeout(() => {
-                        modal.style.display = 'none';
-                        // 把網址後面的 ?ticket=12 洗掉，讓網址變乾淨
-                        if (window.location.protocol !== 'file:') {
-                            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-                            window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
-                        }
-                    }, 400);
-                };
-            }
-
-            // 當按下「重新整理按鈕」時
-            const btnModalRefresh = document.getElementById('btnModalRefresh');
-            if (btnModalRefresh) {
-                btnModalRefresh.onclick = () => {
-                    modalCurrentCall.textContent = globalState.current_calling;
-                    updateModalStatus(ticketNum, globalState.current_calling);
-                };
-            }
-
-            // 當按下紅色的「重新抽號」按鈕時 (只有過號才會出現)
-            const btnModalRedraw = document.getElementById('btnModalRedraw');
-            if (btnModalRedraw) {
-                btnModalRedraw.onclick = () => {
-                    // 把手機裡存的舊號碼洗掉
-                    localStorage.removeItem('sl_my_ticket_number');
-                    // 關閉視窗
-                    modal.classList.remove('show');
-                    activeTicketNum = null;
-                    setTimeout(() => {
-                        modal.style.display = 'none';
-                        
-                        // 把抽號碼的按鈕重新打開，並把剛才吐出來的那張票藏起來
-                        const btnDispense = document.getElementById('btnDispense');
-                        const ticketPaper = document.getElementById('ticketPaper');
-                        if (btnDispense) btnDispense.style.display = 'inline-flex';
-                        if (ticketPaper) ticketPaper.style.display = 'none';
-                        
-                        // 把網址清乾淨
-                        if (window.location.protocol !== 'file:') {
-                            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-                            window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
-                        }
-                    }, 400);
-                };
-            }
-        }
-
-        // 計算視窗裡面「前面還有幾個人」跟「還要等幾分鐘」的邏輯
-        function updateModalStatus(tNum, cCall) {
-            const modalWaitingCount = document.getElementById('modalWaitingCount');
-            const modalEstTimeVal = document.getElementById('modalEstTimeVal');
-            const btnModalRedraw = document.getElementById('btnModalRedraw');
-            if (!modalWaitingCount) return;
-
-            if (tNum > globalState.latest_ticket) {
-                // 如果你的號碼比系統發出的最新號碼還大 (這不可能，除非店長按了重置按鈕洗掉資料了)
-                modalWaitingCount.textContent = '系統已重置';
-                modalWaitingCount.style.color = '#ef4444';
-                modalEstTimeVal.innerHTML = '<span style="font-size:1rem; font-weight:normal; color:#ef4444;">號碼無效</span>';
-                // 顯示紅色的重新抽號按鈕
-                if (btnModalRedraw) btnModalRedraw.style.display = 'inline-flex';
-            } else if (tNum < cCall) {
-                // 如果你的號碼比店長叫的號碼還小，代表你過號了！
-                modalWaitingCount.textContent = '已過號';
-                modalWaitingCount.style.color = '#ef4444';
-                modalEstTimeVal.innerHTML = '0 <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">(請至櫃檯)</span>';
-                // 顯示紅色的重新抽號按鈕，請他重抽
-                if (btnModalRedraw) btnModalRedraw.style.display = 'inline-flex';
-            } else if (tNum === cCall) {
-                // 如果你的號碼等於店長叫的號碼，代表就是你！
-                modalWaitingCount.textContent = '輪到您了！';
-                modalWaitingCount.style.color = '#10b981'; // 綠色字
-                modalEstTimeVal.innerHTML = '0 <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">分鐘</span>';
-                // 隱藏重新抽號按鈕
-                if (btnModalRedraw) btnModalRedraw.style.display = 'none';
-            } else {
-                // 正常排隊中：算出差幾號
-                const diff = tNum - cCall;
-                modalWaitingCount.textContent = `${diff} 人`;
-                modalWaitingCount.style.color = '#0f172a'; // 恢復正常深藍色字
-                // 一樣一個人抓 15 分鐘
-                modalEstTimeVal.innerHTML = `${Math.ceil(diff * 15)} <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">分鐘</span>`;
-                // 隱藏重新抽號按鈕
-                if (btnModalRedraw) btnModalRedraw.style.display = 'none';
-            }
-        }
+        // Kiosk 不使用個人專屬的 localStorage 紀錄或 Modal
     </script>
 </body>
 

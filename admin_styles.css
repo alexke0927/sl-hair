@@ -1,209 +1,244 @@
 /* ==========================================================================
    Admin Specific Styles (店長後台獨有樣式)
+   這裡放的是只有「後台管理頁面」才會用到的專屬 CSS 設計。
    ========================================================================== */
 
-/* Header (簡化管理導覽列) */
+/* ----------------------------------------------------
+   Header (簡化版的管理導覽列)
+   ---------------------------------------------------- */
 .admin-header {
-    background: rgba(7, 89, 133, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 1rem 0;
+    background: rgba(7, 89, 133, 0.85); /* 設定深藍色的半透明背景 */
+    backdrop-filter: blur(10px);        /* 讓背景有毛玻璃(模糊)的效果 */
+    -webkit-backdrop-filter: blur(10px);/* 為了支援蘋果 Safari 瀏覽器的毛玻璃效果 */
+    border-bottom: 1px solid var(--glass-border); /* 底部加一條細細的半透明邊框線 */
+    padding: 1rem 0;                    /* 上下內邊距為 1rem (大約 16px) */
 }
 
+/* 導覽列內部的內容區塊 */
 .admin-header .header-content {
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 90%;                         /* 寬度佔螢幕的 90% */
+    max-width: 800px;                   /* 但最寬不會超過 800px，避免在大螢幕上太散 */
+    margin: 0 auto;                     /* 左右外邊距設為 auto，讓這個區塊能置中對齊 */
+    display: flex;                      /* 啟用 Flex 排版 (彈性盒子) */
+    justify-content: space-between;     /* 讓裡面的元素一個靠左、一個靠右 */
+    align-items: center;                /* 讓裡面的元素垂直置中對齊 */
 }
 
+/* 後台專屬的紅色「管理員」小標籤 */
 .badge-admin {
-    background-color: #ef4444;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.25rem 0.6rem;
-    border-radius: 12px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    background-color: #ef4444;          /* 鮮豔的紅色背景 */
+    color: white;                       /* 白色文字 */
+    font-size: 0.75rem;                 /* 字體稍微縮小一點 */
+    font-weight: 700;                   /* 讓字體變粗 */
+    padding: 0.25rem 0.6rem;            /* 設定標籤的內邊距，讓它有一點厚度 */
+    border-radius: 12px;                /* 讓標籤的四個角變圓弧形 */
+    letter-spacing: 0.5px;              /* 字元之間的間距稍微拉開 */
+    text-transform: uppercase;          /* 如果有英文字母，一律強制轉成大寫 */
 }
 
-/* 後台卡片外觀 */
+/* ----------------------------------------------------
+   後台卡片外觀 (包住所有控制按鈕的白色大框框)
+   ---------------------------------------------------- */
 .admin-container {
-    max-width: 800px !important;
-    padding: 2rem 0 !important;
-    flex: 1;
+    max-width: 800px !important;        /* 強制最高寬度為 800px (!important 代表優先級最高) */
+    padding: 2rem 0 !important;         /* 強制上下內邊距為 2rem */
+    flex: 1;                            /* 在 Flex 容器中自動填滿剩下的空間 */
 }
 
 .admin-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 28px;
-    padding: 2.5rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    margin-top: 1.5rem;
+    background: var(--glass-bg);        /* 使用全域定義的玻璃質感背景色 */
+    border: 1px solid var(--glass-border); /* 加上半透明的邊框 */
+    border-radius: 28px;                /* 大圓角的邊框 */
+    padding: 2.5rem;                    /* 卡片內部的留白距離 */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* 設定卡片下方有大面積的陰影，看起來有立體浮空感 */
+    margin-top: 1.5rem;                 /* 距離上面的元素往下推 1.5rem */
 }
 
-/* 現場叫號狀態看板 */
+/* ----------------------------------------------------
+   現場叫號狀態看板 (顯示當前號碼的深色大區塊)
+   ---------------------------------------------------- */
 .status-display {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    background-color: var(--bg-accent-dark);
-    padding: 1.5rem;
-    border-radius: 20px;
-    margin-bottom: 2.5rem;
-    border: 1px solid var(--glass-border);
-    text-align: center;
+    display: grid;                      /* 啟用 Grid 網格排版 (適合做表格或整齊排列的區塊) */
+    grid-template-columns: repeat(3, 1fr); /* 切成 3 個等寬的直列 (1fr = 1份) */
+    gap: 1.5rem;                        /* 每列之間的間距為 1.5rem */
+    background-color: var(--bg-accent-dark); /* 使用比較深的背景色 */
+    padding: 1.5rem;                    /* 內邊距留白 */
+    border-radius: 20px;                /* 圓角邊框 */
+    margin-bottom: 2.5rem;              /* 距離下方元素推開 2.5rem */
+    border: 1px solid var(--glass-border); /* 加上玻璃邊框 */
+    text-align: center;                 /* 讓區塊內的文字全部置中 */
 }
 
+/* 看板上方的小標題 (例如：目前叫號、等待人數) */
 .status-lbl {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.4rem;
-    font-weight: 600;
+    font-size: 0.8rem;                  /* 字體偏小 */
+    color: var(--text-secondary);       /* 使用次要文字顏色 (通常是灰色) */
+    margin-bottom: 0.4rem;              /* 與下方的數字拉開一點距離 */
+    font-weight: 600;                   /* 字體微粗 */
 }
 
+/* 看板下方的大數字 */
 .status-val {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--color-accent);
-    text-shadow: var(--shadow-neon);
+    font-size: 2.2rem;                  /* 字體放很大 */
+    font-weight: 800;                   /* 字體非常粗 */
+    color: var(--color-accent);         /* 使用主打強調色 (通常是亮藍色或亮綠色) */
+    text-shadow: var(--shadow-neon);    /* 加上文字發光的陰影特效 */
 }
 
+/* 針對看板裡面的「第二個格子 (等待人數)」做特別設定 */
 .status-item:nth-child(2) .status-val {
-    color: var(--color-orange);
-    text-shadow: 0 0 20px var(--color-orange-glow);
+    color: var(--color-orange);         /* 把等待人數變成橘色，用來提醒店長 */
+    text-shadow: 0 0 20px var(--color-orange-glow); /* 把發光特效也換成橘色的光 */
 }
 
-/* 快速控制鍵 */
+/* ----------------------------------------------------
+   快速控制鍵 (主要的操作按鈕區)
+   ---------------------------------------------------- */
 .control-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    margin-bottom: 2.5rem;
+    display: flex;                      /* 啟用彈性盒子排版 */
+    flex-direction: column;             /* 讓按鈕從原本的橫排變成「由上往下直排」 */
+    gap: 1.2rem;                        /* 按鈕跟按鈕之間的間隔距離 */
+    margin-bottom: 2.5rem;              /* 跟下方的區塊保持距離 */
 }
 
+/* 「下一位」按鈕 */
 .btn-call-next {
-    background-color: #10b981;
-    color: #ffffff;
-    font-size: 1.25rem;
+    background-color: #10b981;          /* 綠色背景 */
+    color: #ffffff;                     /* 白色文字 */
+    font-size: 1.25rem;                 /* 字體稍微放大，因為這顆最常用 */
 }
 
+/* 滑鼠移到「下一位」按鈕上的效果 */
 .btn-call-next:hover {
-    background-color: #059669;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    background-color: #059669;          /* 變成更深的綠色 */
+    transform: translateY(-2px);        /* 按鈕稍微往上浮起 2px (做出立體按壓感) */
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4); /* 底部出現綠色的發光陰影 */
 }
 
+/* 「上一位 / 叫號倒退」按鈕 */
 .btn-call-prev {
-    background-color: #f59e0b;
-    color: #ffffff;
+    background-color: #f59e0b;          /* 橘黃色背景 */
+    color: #ffffff;                     /* 白色文字 */
 }
 
 .btn-call-prev:hover {
-    background-color: #d97706;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(245, 158, 11, 0.35);
+    background-color: #d97706;          /* 滑鼠游標移過去時，變成深橘色 */
+    transform: translateY(-2px);        /* 一樣有往上浮起的效果 */
+    box-shadow: 0 6px 15px rgba(245, 158, 11, 0.35); /* 橘色發光陰影 */
 }
 
+/* 「重置歸零」按鈕 (危險動作，所以設計成鏤空的) */
 .btn-reset {
-    background-color: transparent;
-    color: #f87171;
-    border: 2px solid #ef4444;
+    background-color: transparent;      /* 背景透明 (不填色) */
+    color: #f87171;                     /* 文字是淡紅色 */
+    border: 2px solid #ef4444;          /* 有一個 2px 寬的紅色邊框 */
 }
 
 .btn-reset:hover {
-    background-color: rgba(239, 68, 68, 0.1);
-    transform: translateY(-2px);
+    background-color: rgba(239, 68, 68, 0.1); /* 滑鼠移過去時，背景填入非常淡的紅色 */
+    transform: translateY(-2px);        /* 一樣有往上浮起的效果 */
 }
 
-/* 系統提示區 */
+/* ----------------------------------------------------
+   系統提示區 (隱藏的通知對話框)
+   ---------------------------------------------------- */
 .sys-notice {
-    background: rgba(255, 255, 255, 0.05);
-    border-left: 4px solid #38bdf8;
-    padding: 0.8rem 1.2rem;
-    border-radius: 0 12px 12px 0;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    display: none;
+    background: rgba(255, 255, 255, 0.05); /* 非常淡的白色背景 */
+    border-left: 4px solid #38bdf8;     /* 左邊有一條藍色的粗線條，當作視覺重點 */
+    padding: 0.8rem 1.2rem;             /* 內邊距留白 */
+    border-radius: 0 12px 12px 0;       /* 只有右上和右下是圓角 (因為左邊是粗線條) */
+    font-size: 0.85rem;                 /* 字體較小 */
+    color: var(--text-secondary);       /* 文字顏色偏灰 */
+    margin-bottom: 2rem;                /* 和下方保持距離 */
+    display: none;                      /* 預設是隱藏的，只有發生事情時 JavaScript 才會把它打開 */
 }
 
-/* 手動校正面板 */
+/* ----------------------------------------------------
+   手動校正面板 (可以手動輸入號碼修改資料庫的區域)
+   ---------------------------------------------------- */
 .manual-panel h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1.2rem;
-    border-bottom: 1px solid var(--glass-border);
-    padding-bottom: 0.6rem;
+    font-size: 1.2rem;                  /* 區塊標題的大小 */
+    margin-bottom: 1.2rem;              /* 與下方表單的距離 */
+    border-bottom: 1px solid var(--glass-border); /* 標題下面加一條底線 */
+    padding-bottom: 0.6rem;             /* 標題與底線的距離 */
 }
 
+/* 讓三個輸入框排成一列 */
 .form-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.2rem;
+    display: grid;                      /* 啟用網格排版 */
+    grid-template-columns: repeat(3, 1fr); /* 把寬度平均切成 3 份，每個輸入框佔一份 */
+    gap: 1rem;                          /* 輸入框之間的間距 */
+    margin-bottom: 1.2rem;              /* 整個列距離下面的距離 */
 }
 
+/* 包住單個輸入框與其標題的群組 */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    display: flex;                      /* 啟用彈性盒子 */
+    flex-direction: column;             /* 讓標題和輸入框上下排列 */
+    gap: 6px;                           /* 標題和輸入框的距離 */
 }
 
+/* 輸入框上方的標題 */
 .form-group label {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    font-weight: 600;
+    font-size: 0.85rem;                 /* 字體偏小 */
+    color: var(--text-secondary);       /* 次要文字顏色 */
+    font-weight: 600;                   /* 字體微粗 */
 }
 
+/* 實際的輸入框本身 */
 .form-input {
-    width: 100%;
-    background-color: rgba(0, 8, 20, 0.5);
-    border: 2px solid var(--glass-border);
-    padding: 0.8rem;
-    border-radius: 12px;
-    color: #fff;
-    font-size: 1.05rem;
-    text-align: center;
-    transition: var(--transition-smooth);
-    font-family: var(--font-sans);
+    width: 100%;                        /* 寬度撐滿它所在的格子 */
+    background-color: rgba(0, 8, 20, 0.5); /* 非常深的背景色 */
+    border: 2px solid var(--glass-border); /* 邊框顏色 */
+    padding: 0.8rem;                    /* 內部留白 */
+    border-radius: 12px;                /* 圓角 */
+    color: #fff;                        /* 輸入的文字要是白色的才看得到 */
+    font-size: 1.05rem;                 /* 輸入字體的大小 */
+    text-align: center;                 /* 文字置中對齊 */
+    transition: var(--transition-smooth); /* 當狀態改變(例如游標點進去)時，有平滑的漸變動畫 */
+    font-family: var(--font-sans);      /* 使用系統預設字體 */
 }
 
+/* 當游標點進輸入框 (focus) 時的樣式 */
 .form-input:focus {
-    outline: none;
-    border-color: #fff;
+    outline: none;                      /* 移除瀏覽器預設的醜醜藍色外框 */
+    border-color: #fff;                 /* 把邊框變成純白色，提示使用者正在輸入 */
 }
 
+/* 表單錯誤訊息區塊 */
 .error-container {
-    color: #ef4444;
-    font-size: 0.85rem;
-    margin-top: -0.5rem;
-    margin-bottom: 1rem;
-    display: none;
-    align-items: center;
-    gap: 6px;
+    color: #ef4444;                     /* 紅色文字 */
+    font-size: 0.85rem;                 /* 較小字體 */
+    margin-top: -0.5rem;                /* 為了跟上方的輸入框靠得近一點，設定負數的 margin */
+    margin-bottom: 1rem;                /* 和下方送出按鈕的距離 */
+    display: none;                      /* 預設隱藏，發生錯誤才顯示 */
+    align-items: center;                /* 垂直置中 */
+    gap: 6px;                           /* 圖示和文字的距離 */
 }
 
+/* 手動修改資料的送出按鈕 */
 .btn-submit {
-    background-color: #ffffff;
-    color: var(--text-dark);
-    width: 100%;
+    background-color: #ffffff;          /* 白色背景 */
+    color: var(--text-dark);            /* 深色文字 */
+    width: 100%;                        /* 寬度撐滿整個卡片 */
 }
 
 .btn-submit:hover {
-    background-color: #e2e8f0;
+    background-color: #e2e8f0;          /* 滑鼠移過去變成淺灰色 */
 }
 
+/* ----------------------------------------------------
+   手機版響應式設計 (RWD) 
+   當螢幕寬度小於等於 576px (通常是手機直拿) 時，套用以下規則覆蓋原本的設計
+   ---------------------------------------------------- */
 @media (max-width: 576px) {
+    /* 把手動校正的輸入框從「一橫排三個」變成「直排三個」 */
     .form-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr;     /* 網格變成只有一列 (佔滿整寬度) */
         gap: 1rem;
     }
 
+    /* 把後台白色卡片的內邊距縮小，節省手機螢幕空間 */
     .admin-card {
         padding: 1.5rem;
     }

@@ -1,98 +1,119 @@
 <!DOCTYPE html>
+<!-- lang="zh-Hant" 告訴瀏覽器這個網頁的主要語言是「繁體中文」 -->
 <html lang="zh-Hant">
 
 <head>
+    <!-- meta charset="UTF-8" 設定網頁的文字編碼格式為 UTF-8，這樣中文才不會變成亂碼 -->
     <meta charset="UTF-8">
+    <!-- meta viewport 是為了讓網頁能在手機上正常縮放 (RWD 響應式設計) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- title 是顯示在瀏覽器分頁標籤上的名稱 -->
     <title>店長叫號管理系統 | SL百元專業剪髮</title>
 
-    <!-- 引入與主網頁一致的字體 -->
+    <!-- 以下三行是從 Google Fonts 引入漂亮的字體 (Outfit 英文字體與 Noto Sans TC 中文字體) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;700&display=swap"
         rel="stylesheet">
 
+    <!-- 引入我們自己寫的 CSS 樣式表。style.css 是共用的基本樣式，admin_styles.css 是後台專用的樣式 -->
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./admin_styles.css">
 </head>
 
 <body>
+    <!-- 這是畫面背景的兩個發光模糊圓球 (裝飾用) -->
     <div class="ambient-glow glow-1"></div>
     <div class="ambient-glow glow-2"></div>
 
+    <!-- header 代表網頁頂部的「導覽列」 -->
     <header class="header admin-header">
         <div class="header-content">
+            <!-- logo 區塊，點擊可以回到 index.html 首頁 -->
             <a href="index.html" class="logo">
                 SL<span>百元專業剪髮</span>
             </a>
+            <!-- 後台專屬的紅色小標籤，用來提醒使用者這裡不是前台 -->
             <span class="badge-admin">店長控制台</span>
         </div>
     </header>
 
+    <!-- main 是網頁的主要內容區域 -->
     <main class="container admin-container">
+        <!-- admin-card 是一個帶有陰影的白色大方塊，用來包住所有控制介面 -->
         <div class="admin-card">
+            <!-- section-title 是這個區塊的標題 -->
             <div class="section-title">
                 <h2>當前排隊叫號管理</h2>
                 <p>店長專用後台：控制今日叫號狀態與即時更新前台顧客看板</p>
             </div>
 
-            <!-- 當前現場狀態展示 -->
+            <!-- 這塊是「當前現場狀態展示」，用三個格子顯示目前的叫號數據 -->
             <div class="status-display">
+                <!-- 第一個格子：顯示目前叫到幾號 -->
                 <div class="status-item">
                     <div class="status-lbl">當前叫號 (前台)</div>
-                    <div class="status-val" id="dispCurrent">--</div>
+                    <div class="status-val" id="dispCurrent">--</div> <!-- id="dispCurrent" 讓 JavaScript 可以抓到這個元素並填入數字 -->
                 </div>
+                <!-- 第二個格子：顯示還有多少人在等 -->
                 <div class="status-item">
                     <div class="status-lbl">剩餘等待人數</div>
                     <div class="status-val" id="dispWaiting">--</div>
                 </div>
+                <!-- 第三個格子：顯示今天總共剪了幾個客人 -->
                 <div class="status-item">
                     <div class="status-lbl">今日累計服務</div>
                     <div class="status-val" id="dispTotal">--</div>
                 </div>
             </div>
 
-            <!-- 控制台即時警告或提示 -->
+            <!-- 控制台即時警告或提示 (例如跳出「已呼叫下一號」的藍色小視窗) -->
             <div class="sys-notice" id="sysNotice">提示訊息欄</div>
 
-            <!-- 快速控制面版 -->
+            <!-- 快速控制面版：放三個最常用的大按鈕 -->
             <div class="control-panel">
+                <!-- 「下一位」按鈕 -->
                 <button type="button" class="btn btn-call-next" id="btnNext">
                     🔊 呼叫下一號 (+1)
                 </button>
+                <!-- 「上一位」按鈕 (不小心按太快可以退回) -->
                 <button type="button" class="btn btn-call-prev" id="btnPrev">
                     ↩ 退回上一號 (-1)
                 </button>
+                <!-- 「重置歸零」按鈕 (每天打烊或開店時按一次) -->
                 <button type="button" class="btn btn-reset" id="btnReset">
                     🧹 初始化排隊資料 (重設為當日初始狀態)
                 </button>
             </div>
 
-            <!-- 手動精準校正面版 -->
+            <!-- 手動精準校正面版：如果發現數字不對，可以手動打字修改 -->
             <section class="manual-panel">
                 <h3>⚙ 手動數據校正</h3>
+                <!-- form 代表這是一個可以輸入資料並送出的「表單」 -->
                 <form id="manualForm" novalidate>
+                    <!-- form-row 讓這三個輸入框在畫面上橫向並排 -->
                     <div class="form-row">
+                        <!-- 修改當前叫號的輸入框 -->
                         <div class="form-group">
                             <label for="inputCurrent">修改當前叫號</label>
-                            <input type="text" id="inputCurrent" class="form-input" placeholder="例如: 12"
-                                autocomplete="off">
+                            <input type="text" id="inputCurrent" class="form-input" placeholder="例如: 12" autocomplete="off">
                         </div>
+                        <!-- 修改等待人數的輸入框 -->
                         <div class="form-group">
                             <label for="inputWaiting">修改等待人數</label>
-                            <input type="text" id="inputWaiting" class="form-input" placeholder="例如: 4"
-                                autocomplete="off">
+                            <input type="text" id="inputWaiting" class="form-input" placeholder="例如: 4" autocomplete="off">
                         </div>
+                        <!-- 修改累計服務的輸入框 -->
                         <div class="form-group">
                             <label for="inputTotal">修改累計服務</label>
-                            <input type="text" id="inputTotal" class="form-input" placeholder="例如: 84"
-                                autocomplete="off">
+                            <input type="text" id="inputTotal" class="form-input" placeholder="例如: 84" autocomplete="off">
                         </div>
                     </div>
-                    <!-- 錯誤警示 -->
+                    <!-- 隱藏的錯誤警示區 (例如輸入英文字母時會跳出紅字警告) -->
                     <div class="error-container" id="formError"></div>
 
+                    <!-- 表單的送出按鈕 -->
                     <button type="submit" class="btn btn-submit">
                         💾 儲存並套用修改
                     </button>
@@ -101,17 +122,20 @@
         </div>
     </main>
 
+    <!-- footer 是網頁最底部的版權宣告 -->
     <footer class="footer">
         <p>&copy; 2026 SL 百元專業剪髮 管理系統。僅限內部操作授權。</p>
     </footer>
 
-    <!-- Firebase SDK -->
+    <!-- 引入 Firebase SDK (這是 Google 提供的雲端資料庫工具，讓我們能做到「線上即時同步」) -->
+    <!-- 注意：必須先引入 app.js 再引入 database.js，順序不能顛倒！ -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <!-- 後台邏輯與 Firebase 儲存同步 (JavaScript) -->
     <script>
         // === [您專屬的 Firebase Config] ===
+        // 這一段是連接您專屬資料庫的「金鑰與網址」，有了這些，網頁才知道要把資料存去哪裡。
         const firebaseConfig = {
             apiKey: "AIzaSyBh9Rl-elENwOEZXaKalgw8doI3T9UPTNQ",
             authDomain: "sl-hair-queue.firebaseapp.com",
@@ -120,61 +144,76 @@
             messagingSenderId: "925491179708",
             appId: "1:925491179708:web:1d28c7e17a90100c76a0b9",
             measurementId: "G-8V9F0J33YG",
-            // 預設的資料庫網址，根據您的專案 ID 自動推導
             databaseURL: "https://sl-hair-queue-default-rtdb.firebaseio.com" 
         };
         // ==========================================
 
+        // 設定一個變數 db，用來代表我們的資料庫
         let db = null;
+        // 如果上面有填 apiKey，我們就啟動 Firebase
         if (firebaseConfig.apiKey) {
             firebase.initializeApp(firebaseConfig);
             db = firebase.database();
         }
 
+        // 定義一個 globalState (全域狀態)，用來記住現在所有最新的數字
         let globalState = {
-            current_calling: 0,
-            waiting_count: 0,
-            total_served: 0,
-            latest_ticket: 0,
-            last_date: getTodayDateString()
+            current_calling: 0, // 目前叫到幾號
+            waiting_count: 0,   // 有幾個人在等
+            total_served: 0,    // 今天總共剪了幾個人
+            latest_ticket: 0,   // 最新抽出來的號碼牌號碼是幾號
+            last_date: getTodayDateString() // 紀錄今天的日期字串 (用來判斷是否換日)
         };
 
+        // 一個小工具函式：取得今天的日期字串，格式為 YYYY-MM-DD
         function getTodayDateString() {
             const now = new Date();
             const yyyy = now.getFullYear();
-            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const mm = String(now.getMonth() + 1).padStart(2, '0'); // padStart 會自動補0，例如 5 月會變成 '05'
             const dd = String(now.getDate()).padStart(2, '0');
             return `${yyyy}-${mm}-${dd}`;
         }
 
+        // 把畫面上負責顯示數字的 HTML 標籤抓出來，存進變數中方便等下修改
         const dispCurrent = document.getElementById('dispCurrent');
         const dispWaiting = document.getElementById('dispWaiting');
         const dispTotal = document.getElementById('dispTotal');
         const sysNotice = document.getElementById('sysNotice');
+        
+        // 把畫面上負責「手動輸入」的輸入框抓出來
         const inputCurrent = document.getElementById('inputCurrent');
         const inputWaiting = document.getElementById('inputWaiting');
         const inputTotal = document.getElementById('inputTotal');
         const formError = document.getElementById('formError');
 
+        // 當整個網頁載入完成後執行
         document.addEventListener('DOMContentLoaded', () => {
             if (db) {
-                initFirebase();
+                initFirebase(); // 如果有資料庫連線，就去把最新的資料抓下來
             } else {
                 showNotice("⚠ 尚未設定 Firebase Config，目前系統無法線上同步。", "red");
             }
         });
 
+        // 初始化 Firebase 的連線監聽
         function initFirebase() {
+            // 指向資料庫中的 'queueStatus' 這個節點 (就像一個資料夾)
             const queueRef = db.ref('queueStatus');
+            
+            // on('value') 是一個「即時監聽器」。只要雲端上的資料有任何風吹草動被修改，這個函式就會自動被觸發！
             queueRef.on('value', (snapshot) => {
-                const data = snapshot.val();
+                const data = snapshot.val(); // 把抓下來的資料拿出來
+                
                 if (data) {
                     const todayStr = getTodayDateString();
+                    // 【跨日自動歸零防呆】：如果發現資料庫記錄的日期，跟「今天」不一樣，代表換日了！
                     if (data.last_date && data.last_date !== todayStr) {
-                        doResetData();
+                        doResetData(); // 強制把所有數據歸零
                         showNotice('🧹 偵測到跨日，今日數據已自動歸零！');
                         return;
                     }
+                    
+                    // 把雲端上的最新資料更新到我們自己的 globalState 變數中
                     globalState = {
                         current_calling: data.current_calling || 0,
                         waiting_count: data.waiting_count || 0,
@@ -182,33 +221,43 @@
                         latest_ticket: data.latest_ticket || 0,
                         last_date: data.last_date || todayStr
                     };
-                    updateDOM();
+                    updateDOM(); // 呼叫更新畫面的函式
                 } else {
+                    // 如果雲端上什麼資料都沒有 (例如第一次使用)，就幫它塞一組全部為0的資料上去
                     doResetData();
                 }
             });
         }
 
+        // 負責把 globalState 裡的數字，真正寫到網頁畫面上的函式
         function updateDOM() {
+            // 更新看板上的大數字
             dispCurrent.textContent = globalState.current_calling;
             dispWaiting.textContent = globalState.waiting_count;
             dispTotal.textContent = globalState.total_served;
 
+            // 更新下方手動輸入框裡的預設數字。
+            // document.activeElement 代表「使用者現在游標正在點哪裡」。
+            // 如果使用者游標在輸入框裡面打字，我們就不要強行覆蓋他的字，不然會打斷他。
             if (document.activeElement !== inputCurrent) inputCurrent.value = globalState.current_calling;
             if (document.activeElement !== inputWaiting) inputWaiting.value = globalState.waiting_count;
             if (document.activeElement !== inputTotal) inputTotal.value = globalState.total_served;
         }
 
+        // 負責把更新的數字「推」上雲端資料庫的函式
         function saveToFirebase(updates) {
             if (!db) return;
+            // .update(updates) 只會更新你有指定改變的欄位，其他欄位不會動到
             db.ref('queueStatus').update(updates).catch(err => {
                 console.error("更新 Firebase 失敗:", err);
-                showNotice("⚠ 網路連線異常，資料同步失敗！", "red");
+                showNotice("⚠ 網路連線異常，資料同步失敗！", "red"); // 如果斷網會跳紅字提示
             });
         }
 
+        // 全部歸零重設的函式
         function doResetData() {
             if (!db) return;
+            // .set 會把 'queueStatus' 裡面原本的東西全部洗掉，蓋成下面這組初始資料
             db.ref('queueStatus').set({
                 current_calling: 0,
                 waiting_count: 0,
@@ -218,9 +267,12 @@
             });
         }
 
+        // 顯示小視窗提示訊息的函式
         function showNotice(msg, type = 'blue') {
-            sysNotice.textContent = msg;
-            sysNotice.style.display = 'block';
+            sysNotice.textContent = msg;         // 塞入文字
+            sysNotice.style.display = 'block';   // 讓視窗出現
+            
+            // 判斷是普通的藍色提示，還是嚴重的紅色警告
             if (type === 'red') {
                 sysNotice.style.borderLeftColor = '#ef4444';
                 sysNotice.style.color = '#f87171';
@@ -228,55 +280,76 @@
                 sysNotice.style.borderLeftColor = '#38bdf8';
                 sysNotice.style.color = 'var(--text-secondary)';
             }
+            // 設定一個計時器，4000毫秒 (4秒) 後自動把提示視窗關閉隱藏
             setTimeout(() => sysNotice.style.display = 'none', 4000);
         }
 
+        // ==========================================
+        // 以下是綁定各種按鈕點擊事件
+        // ==========================================
+
+        // 綁定「呼叫下一號」按鈕
         document.getElementById('btnNext').addEventListener('click', () => {
             if (!db) return showNotice("未連線 Firebase", "red");
+            
+            // 【防呆】：如果等候人數是 0，或是目前的號碼已經等於最新抽出來的號碼 (沒人排隊了)
             if (globalState.waiting_count <= 0 || globalState.current_calling >= globalState.latest_ticket) {
                 return showNotice('⚠ 現場目前無人排隊，請等候客人抽取號碼牌！', 'red');
             }
+            
+            // 把「當前號碼+1」、「等待人數-1」、「累積服務人數+1」，然後推上雲端！
             saveToFirebase({
                 current_calling: globalState.current_calling + 1,
                 waiting_count: globalState.waiting_count - 1,
                 total_served: globalState.total_served + 1
             });
+            // 在自己的畫面上跳出提示
             showNotice(`🔊 已呼叫下一號：第 ${globalState.current_calling + 1} 號。`);
         });
 
+        // 綁定「退回上一號」按鈕 (不小心按錯時的後悔藥)
         document.getElementById('btnPrev').addEventListener('click', () => {
             if (!db) return showNotice("未連線 Firebase", "red");
+            
+            // 把狀態拿出來暫存到 c, w, t 這三個簡短的變數中
             let c = globalState.current_calling;
             let w = globalState.waiting_count;
             let t = globalState.total_served;
 
+            // 【防呆】：號碼跟人數最低不能小於 0 (不可能叫到 -1 號)
             if (c > 0) c--;
-            w++;
+            w++; // 退回一號代表那個人又變回「等待中」了
             if (t > 0) t--;
 
             saveToFirebase({ current_calling: c, waiting_count: w, total_served: t });
             showNotice(`↩ 退回上一號：第 ${c} 號。現場等待增加 1 名。`);
         });
 
+        // 綁定「重置資料」按鈕
         let resetTimeout = null;
-        let isResetConfirming = false;
+        let isResetConfirming = false; // 用來記錄「現在是不是在問你要不要確定」的狀態
         const btnReset = document.getElementById('btnReset');
 
         btnReset.addEventListener('click', () => {
+            // 這是一個「雙重確認」防呆機制，避免手滑按到直接歸零
             if (!isResetConfirming) {
+                // 第一次按：把狀態改成「確認中」，並把按鈕變成紅色的警告樣式
                 isResetConfirming = true;
                 btnReset.innerHTML = '⚠ 確定重設？請再次點擊確認';
                 btnReset.style.backgroundColor = '#ef4444';
                 btnReset.style.color = '#ffffff';
+                // 設定一個倒數 3.5 秒的計時器，如果 3.5 秒內沒有按第二下，按鈕就會自動恢復原狀
                 resetTimeout = setTimeout(restoreResetButton, 3500);
             } else {
-                clearTimeout(resetTimeout);
-                doResetData();
+                // 第二次按 (而且是在 3.5 秒內)：真的執行歸零
+                clearTimeout(resetTimeout); // 取消倒數計時
+                doResetData();              // 呼叫清空資料庫的函式
                 showNotice('🧹 今日排隊資料已成功重設為當日初始狀態。');
-                restoreResetButton();
+                restoreResetButton();       // 恢復按鈕原狀
             }
         });
 
+        // 恢復重置按鈕原狀的函式
         function restoreResetButton() {
             isResetConfirming = false;
             btnReset.innerHTML = '🧹 初始化排隊資料 (重設為當日初始狀態)';
@@ -284,26 +357,32 @@
             btnReset.style.color = '#f87171';
         }
 
+        // 綁定「手動輸入表單」的送出按鈕
         document.getElementById('manualForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            formError.style.display = 'none';
+            e.preventDefault(); // 防止網頁重整
+            formError.style.display = 'none'; // 隱藏之前的錯誤提示
 
+            // 把三個輸入框裡的文字轉換成數字
             const numCurrent = parseInt(inputCurrent.value, 10);
             const numWaiting = parseInt(inputWaiting.value, 10);
             const numTotal = parseInt(inputTotal.value, 10);
 
+            // 【防呆】：如果打的不是數字 (isNaN)，或者是負數 (< 0)
             if (isNaN(numCurrent) || numCurrent < 0 || isNaN(numWaiting) || numWaiting < 0 || isNaN(numTotal) || numTotal < 0) {
                 formError.textContent = '⚠ 請輸入有效的非負整數。';
                 formError.style.display = 'flex';
-                return;
+                return; // 顯示錯誤並終止執行
             }
 
+            // 如果驗證通過，就把新數字覆蓋上雲端
             saveToFirebase({
                 current_calling: numCurrent,
                 waiting_count: numWaiting,
                 total_served: numTotal
             });
+            
             showNotice('💾 手動調校數據已同步至雲端。');
+            // .blur() 的意思是「取消輸入框的焦點」，這樣手機鍵盤就會自動收起來
             inputCurrent.blur(); inputWaiting.blur(); inputTotal.blur();
         });
     </script>
