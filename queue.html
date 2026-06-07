@@ -497,7 +497,12 @@
                         const btnModalRedraw = document.getElementById('btnModalRedraw');
                         if (!modalWaitingCount) return;
 
-                        if (tNum < cCall) {
+                        if (tNum > globalState.latest_ticket) {
+                            modalWaitingCount.textContent = '系統已重置';
+                            modalWaitingCount.style.color = '#ef4444';
+                            modalEstTimeVal.innerHTML = '<span style="font-size:1rem; font-weight:normal; color:#ef4444;">號碼無效</span>';
+                            if (btnModalRedraw) btnModalRedraw.style.display = 'inline-flex';
+                        } else if (tNum < cCall) {
                             modalWaitingCount.textContent = '已過號';
                             modalWaitingCount.style.color = '#ef4444';
                             modalEstTimeVal.innerHTML = '0 <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">(請至櫃檯)</span>';
