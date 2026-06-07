@@ -253,8 +253,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    right: 0;
+    bottom: 0;
     background: rgba(7, 89, 133, 0.85);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -276,7 +276,7 @@
     color: #1b2d42;
     width: 90%;
     max-width: 400px;
-    padding: 2.5rem;
+    padding: 2rem 1.2rem;
     border-radius: 28px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     text-align: center;
