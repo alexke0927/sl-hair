@@ -389,12 +389,13 @@
                                     ticketPaper.style.display = 'flex';
                                     btnDispense.style.display = 'none';
 
+                                    // 1. 將號碼存入手機本機，重刷網頁也不會不見
+                                    localStorage.setItem('sl_my_ticket_number', newTicketNumber);
+
+                                    // 2. 取消原本 10 秒後消失的設定，改為 3 秒後自動彈出「即時追蹤進度」的視窗
                                     setTimeout(() => {
-                                        ticketPaper.style.display = 'none';
-                                        btnDispense.style.display = 'inline-flex';
-                                        ticketQrImg.src = '';
-                                        dispensedNumberText.textContent = '--';
-                                    }, 10000);
+                                        showTicketModal(newTicketNumber);
+                                    }, 3000);
                                 }
                             });
                         });
