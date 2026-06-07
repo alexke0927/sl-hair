@@ -200,14 +200,16 @@
                 </ul>
             </div>
 
-            <!-- 模擬地圖 -->
-            <div class="footer-map" aria-label="SL剪髮店面地圖">
-                <div class="map-placeholder">
-                    <div class="map-accent-line"></div>
-                    <div class="map-accent-line-h"></div>
-                    <div class="map-pin">📍</div>
-                    山西路二段 (台中店)
-                </div>
+            <!-- 真實 Google Maps 嵌入 -->
+            <div class="footer-map" aria-label="SL剪髮店面地圖" style="overflow: hidden;">
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    style="border:0;" 
+                    src="https://maps.google.com/maps?q=台中市北區山西路二段49號&t=m&z=16&output=embed&iwloc=near" 
+                    allowfullscreen>
+                </iframe>
             </div>
         </div>
 
