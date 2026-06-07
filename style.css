@@ -1030,3 +1030,16 @@
 .admin-header {
     padding: 1rem 0;
 }
+
+@media (max-width: 992px) {
+    .hero-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    .hero h1 {
+        font-size: 2.3rem !important;
+    }
+}
