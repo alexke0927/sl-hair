@@ -87,12 +87,6 @@
                                 <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 2px;">您的排隊號碼為</p>
                                 <div class="ticket-number" id="dispensedNumber">--</div>
 
-                                <!-- QR Code 容器 -->
-                                <img src="" alt="進度追蹤 QR Code" class="ticket-qr-code" id="ticketQrImg"
-                                    style="display:none;">
-
-                                <p style="font-size: 0.7rem; color: #475569; font-weight: 700; margin-bottom: 4px;">掃描上方
-                                    QR 碼追蹤排隊進度</p>
                                 <div class="ticket-time" id="dispenseTimeText">取號時間: --:--</div>
                             </div>
                         </div>
@@ -381,10 +375,6 @@
                                     const now = new Date();
                                     const timeHtml = `日期: 民國 ${now.getFullYear() - 1911} 年 ${now.getMonth() + 1} 月 ${now.getDate()} 日<br>時間: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`;
                                     dispenseTimeText.innerHTML = timeHtml;
-
-                                    const trackingUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(window.location.origin + window.location.pathname + '?ticket=' + newTicketNumber)}`;
-                                    ticketQrImg.src = trackingUrl;
-                                    ticketQrImg.style.display = 'block';
 
                                     ticketPaper.style.display = 'flex';
                                     btnDispense.style.display = 'none';
