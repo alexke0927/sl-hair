@@ -156,6 +156,7 @@
             </div>
 
             <button class="btn btn-secondary" id="btnModalRefresh" style="width: 100%; margin-top: 1.5rem; border-radius: 12px;">🔄 點擊重新整理最新狀態</button>
+            <button class="btn" id="btnModalRedraw" style="width: 100%; margin-top: 1rem; border-radius: 12px; background-color: #ef4444; color: white; display: none;">⚠️ 已過號，點此重新抽號</button>
         </div>
     </div>
 
@@ -467,26 +468,51 @@
                                 updateModalStatus(ticketNum, globalState.current_calling);
                             };
                         }
+
+                        const btnModalRedraw = document.getElementById('btnModalRedraw');
+                        if (btnModalRedraw) {
+                            btnModalRedraw.onclick = () => {
+                                localStorage.removeItem('sl_my_ticket_number');
+                                modal.classList.remove('show');
+                                activeTicketNum = null;
+                                setTimeout(() => {
+                                    modal.style.display = 'none';
+                                    const btnDispense = document.getElementById('btnDispense');
+                                    const ticketPaper = document.getElementById('ticketPaper');
+                                    if (btnDispense) btnDispense.style.display = 'inline-flex';
+                                    if (ticketPaper) ticketPaper.style.display = 'none';
+                                    
+                                    if (window.location.protocol !== 'file:') {
+                                        const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                                        window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
+                                    }
+                                }, 400);
+                            };
+                        }
                     }
 
                     function updateModalStatus(tNum, cCall) {
                         const modalWaitingCount = document.getElementById('modalWaitingCount');
                         const modalEstTimeVal = document.getElementById('modalEstTimeVal');
+                        const btnModalRedraw = document.getElementById('btnModalRedraw');
                         if (!modalWaitingCount) return;
 
                         if (tNum < cCall) {
                             modalWaitingCount.textContent = '已過號';
                             modalWaitingCount.style.color = '#ef4444';
                             modalEstTimeVal.innerHTML = '0 <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">(請至櫃檯)</span>';
+                            if (btnModalRedraw) btnModalRedraw.style.display = 'inline-flex';
                         } else if (tNum === cCall) {
                             modalWaitingCount.textContent = '輪到您了！';
                             modalWaitingCount.style.color = '#10b981';
                             modalEstTimeVal.innerHTML = '0 <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">分鐘</span>';
+                            if (btnModalRedraw) btnModalRedraw.style.display = 'none';
                         } else {
                             const diff = tNum - cCall;
                             modalWaitingCount.textContent = `${diff} 人`;
                             modalWaitingCount.style.color = '#0f172a';
                             modalEstTimeVal.innerHTML = `${Math.ceil(diff * 15)} <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">分鐘</span>`;
+                            if (btnModalRedraw) btnModalRedraw.style.display = 'none';
                         }
                     }
                 </script>
