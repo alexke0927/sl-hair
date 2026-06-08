@@ -1090,3 +1090,43 @@ body {
             font-size: 2.3rem !important;
         }
     }
+
+/* ==========================================================================
+   14. 全域懸浮號碼牌 (Global Floating Ticket Widget)
+   ========================================================================== */
+.floating-ticket-widget {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 9999;
+    background: rgba(3, 105, 161, 0.85); /* 品牌深藍 */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(3, 105, 161, 0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    animation: floatPulse 3s ease-in-out infinite;
+    text-decoration: none;
+}
+
+.floating-ticket-widget:hover {
+    background: rgba(3, 105, 161, 1);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(3, 105, 161, 0.7);
+    transform: scale(1.05);
+    animation: none; /* 懸停時暫停呼吸燈 */
+}
+
+@keyframes floatPulse {
+    0% { transform: translateY(0); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(3, 105, 161, 0.5); }
+    50% { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(3, 105, 161, 0.8); }
+    100% { transform: translateY(0); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(3, 105, 161, 0.5); }
+}

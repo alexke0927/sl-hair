@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
         initButtonRipples();
         // 啟動「排隊時間估算器」功能
         initQueueCalculator();
+        // 啟動「全域懸浮號碼牌」功能
+        initFloatingTicket();
     } catch (globalError) {
         // console.error 會在瀏覽器的「開發者工具」控制台中印出紅色的錯誤訊息，方便工程師抓蟲 (Debug)。
         console.error('[CRITICAL] 網頁初始化失敗，請聯絡前端工程團隊：', globalError);
@@ -270,5 +272,48 @@ function initQueueCalculator() {
         inputError.textContent = `⚠ ${msg}`;   // 把錯誤文字塞進去
         inputError.style.display = 'flex';     // 顯示錯誤訊息區塊
         ticketInput.focus();                   // 自動幫客人把游標對焦回輸入框
+    }
+}
+
+/**
+ * ==========================================================================
+ * 全域懸浮號碼牌 (Global Floating Ticket Widget)
+ * 如果客人的手機存有抽號紀錄，就在全網頁右下角顯示一顆號碼泡泡
+ * ==========================================================================
+ */
+function initFloatingTicket() {
+    try {
+        const savedTicket = localStorage.getItem('sl_my_ticket_number');
+        
+        // 如果沒有存號碼，就不做任何事
+        if (!savedTicket) return;
+
+        // 如果目前網址已經在 queue.html 且 modal 可能是開啟狀態，我們依然顯示按鈕，
+        // 當他點擊按鈕時，如果 modal 沒開，我們就幫他打開。
+        
+        // 建立懸浮按鈕的 a 標籤
+        const floatingBtn = document.createElement('a');
+        floatingBtn.className = 'floating-ticket-widget';
+        floatingBtn.href = `queue.html?ticket=${savedTicket}`;
+        floatingBtn.innerHTML = `🎟️ 您的號碼: ${savedTicket} <span style="font-size: 0.8rem; opacity: 0.8; font-weight: 400; margin-left: 4px;">點擊查看進度</span>`;
+        
+        // 把按鈕塞進 body 裡面
+        document.body.appendChild(floatingBtn);
+
+        // 特殊處理：如果他本來就在 queue.html 頁面上，不要跳轉，而是直接呼叫 showTicketModal
+        if (window.location.pathname.includes('queue.html')) {
+            floatingBtn.onclick = (e) => {
+                e.preventDefault();
+                // 假設 queue.html 裡面的 showTicketModal 是全域函式
+                if (typeof window.showTicketModal === 'function') {
+                    window.showTicketModal(parseInt(savedTicket, 10));
+                } else {
+                    // 如果找不到函式，就重新整理網頁並帶入參數
+                    window.location.href = `queue.html?ticket=${savedTicket}`;
+                }
+            };
+        }
+    } catch (error) {
+        console.error('[Error] 初始化懸浮號碼牌時發生錯誤：', error);
     }
 }
