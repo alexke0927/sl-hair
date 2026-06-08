@@ -49,6 +49,11 @@
     /* 點擊導覽列時平滑滾動 */
 }
 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     font-family: var(--font-sans);
     background-color: var(--bg-main);
@@ -315,7 +320,8 @@ body {
    排版上使用 display: grid; 來切割左右兩塊 (文字與圖片)，這是非常強大且好用的排版工具。
    ========================================================================== */
 .hero {
-    min-height: 100vh;
+    min-height: 100vh; /* 給舊版瀏覽器的備用方案 */
+    min-height: 100dvh; /* 專為 iOS Safari 等手機瀏覽器設計，自動扣除上下工具列 */
     display: flex;
     align-items: center;
     padding-top: 100px;
