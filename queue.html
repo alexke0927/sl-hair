@@ -282,6 +282,25 @@
                         last_date: data.last_date || todayStr
                     };
                     updateDOM(); // 更新網頁上的數字
+
+                    // === [新增：到號主動通知機制] ===
+                    const savedTicket = localStorage.getItem('sl_my_ticket_number');
+                    if (savedTicket) {
+                        const myNumber = parseInt(savedTicket, 10);
+                        if (myNumber === globalState.current_calling) {
+                            // 檢查這個 Session 內是否已經針對這個號碼提醒過了，避免每次資料庫更新都狂彈視窗
+                            const notifiedKey = `sl_notified_${todayStr}_${myNumber}`;
+                            if (!sessionStorage.getItem(notifiedKey)) {
+                                sessionStorage.setItem(notifiedKey, 'true'); // 標記已通知
+                                alert(`【輪到您了！】\\n您的號碼 ${myNumber} 號已經開始叫號，請立即前往櫃檯！`);
+                                // 強制呼叫大視窗彈出，強烈佔據視覺
+                                if (typeof showTicketModal === 'function') {
+                                    showTicketModal(myNumber);
+                                }
+                            }
+                        }
+                    }
+                    // ===================================
                 } else {
                     resetDailyData(); // 如果雲端沒資料，就塞零進去
                 }
@@ -488,23 +507,33 @@
                 if (!isNaN(ticketNum) && ticketNum > 0) {
                     localStorage.setItem('sl_my_ticket_number', ticketNum); // 幫他存到手機裡
                     showTicketModal(ticketNum); // 直接跳出他的狀態視窗
-                    hideDispenseBtn();          // 把取號按鈕藏起來，避免他重複抽
+                    restoreTicketPaper(ticketNum); // 將實體號碼機的票卡吐出來顯示
                 }
             } else {
                 // 如果網址沒有帶參數，那就檢查手機的 localStorage 裡面有沒有之前存過的號碼
                 const savedTicket = localStorage.getItem('sl_my_ticket_number');
                 if (savedTicket) {
                     // 如果有，也一樣跳出狀態視窗
-                    showTicketModal(parseInt(savedTicket, 10));
-                    hideDispenseBtn();
+                    const parsedTicket = parseInt(savedTicket, 10);
+                    showTicketModal(parsedTicket);
+                    restoreTicketPaper(parsedTicket);
                 }
             }
         }
 
-        // 隱藏取號按鈕的小工具
-        function hideDispenseBtn() {
+        // 還原實體號碼機的票卡視覺 (原本是 hideDispenseBtn)
+        function restoreTicketPaper(ticketNum) {
             const btnDispense = document.getElementById('btnDispense');
+            const ticketPaper = document.getElementById('ticketPaper');
+            const dispensedNumberText = document.getElementById('dispensedNumber');
+            const dispenseTimeText = document.getElementById('dispenseTimeText');
+
             if (btnDispense) btnDispense.style.display = 'none';
+            if (ticketPaper && dispensedNumberText && dispenseTimeText) {
+                ticketPaper.style.display = 'flex';
+                dispensedNumberText.textContent = ticketNum;
+                dispenseTimeText.innerHTML = `已取號`; // 若沒存詳細時間，至少顯示已取號
+            }
         }
 
         // 顯示全螢幕「即時追蹤」視窗的函式
