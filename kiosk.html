@@ -21,6 +21,9 @@
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;700&display=swap"
         rel="stylesheet">
 
+    <!-- 引入 QR Code 產生套件 (qrcode.js) 避免依賴外部 API 圖片掛掉 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
     <!-- 引入 CSS 樣式表。style.css 是共用基礎樣式，queue_styles.css 是排隊相關的共用樣式 -->
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./queue_styles.css">
@@ -400,15 +403,37 @@
                         const timeHtml = `日期: 民國 ${now.getFullYear() - 1911} 年 ${now.getMonth() + 1} 月 ${now.getDate()} 日<br>時間: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`;
                         dispenseTimeText.innerHTML = timeHtml;
 
-                        // 【Kiosk 專屬】：利用 Google Chart API 自動產生一組帶有專屬號碼的 QR Code 圖片
+                        // 【Kiosk 專屬】：利用前端 qrcode.js 套件自動產生一組帶有專屬號碼的 QR Code 圖片
                         const qrContainer = document.getElementById('qrCodeContainer');
                         if (qrContainer) {
                             // 算出客人的手機要連到哪個網址 (連到 queue.html，並且網址後面帶上 ?ticket=他的號碼)
                             let baseHtmlUrl = window.location.protocol + "//" + window.location.host;
                             let currentPath = window.location.pathname.replace('kiosk.html', 'queue.html');
                             const trackingUrl = baseHtmlUrl + currentPath + "?ticket=" + newTicketNumber;
-                            // 把網址塞進 Google API 產生圖片
-                            qrContainer.innerHTML = `<img src="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=${encodeURIComponent(trackingUrl)}" alt="QR Code" style="border: 2px solid #e2e8f0; border-radius: 8px; padding: 4px; background: white;">`;
+                            
+                            // 清空上一次產生的 QR Code
+                            qrContainer.innerHTML = '';
+                            
+                            // 在網頁端直接生成 QR Code 圖片，避免依賴外部 API 導致圖片掛掉
+                            new QRCode(qrContainer, {
+                                text: trackingUrl,
+                                width: 120,
+                                height: 120,
+                                colorDark : "#0f172a",
+                                colorLight : "#ffffff",
+                                correctLevel : QRCode.CorrectLevel.M
+                            });
+                            
+                            // 因為 qrcode.js 會直接產生 img 或 canvas，我們用 setTimeout 等它產生完加上外框美化
+                            setTimeout(() => {
+                                const qrCanvas = qrContainer.querySelector('canvas') || qrContainer.querySelector('img');
+                                if (qrCanvas) {
+                                    qrCanvas.style.border = '2px solid #e2e8f0';
+                                    qrCanvas.style.borderRadius = '8px';
+                                    qrCanvas.style.padding = '4px';
+                                    qrCanvas.style.background = 'white';
+                                }
+                            }, 50);
                         }
 
                         // 用動畫讓票卡吐出來，並把按鈕藏起來

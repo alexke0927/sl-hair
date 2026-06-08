@@ -10,10 +10,22 @@
     <!-- 網頁標題，會顯示在瀏覽器的標籤頁上 -->
     <title>SL百元專業剪髮 | 極速、平價、時尚沙龍</title>
 
+    <!-- 資安防護設定 (Content Security Policy) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
+
     <!-- SEO 與 Meta 設定：幫助 Google 搜尋引擎了解這個網頁在做什麼 -->
     <meta name="description" content="SL百元專業剪髮提供最快、最專業的男士女士剪髮服務。只需120元，由擁有多年沙龍經驗的設計師為您量身打造完美輪廓。本站提供線上號碼牌即時等候時間估算。">
     <!-- 關鍵字設定，當有人搜尋這些字時比較容易找到我們 -->
     <meta name="keywords" content="SL剪髮, 百元剪髮, 快速剪髮, 台北剪髮, 平價沙龍, 排隊叫號">
+
+    <!-- Open Graph (OG) 社群分享標籤設定 -->
+    <meta property="og:title" content="SL百元專業剪髮 | 極速、平價、時尚沙龍">
+    <meta property="og:description" content="最快、最專業的男士女士剪髮服務。只需120元，即刻享有量身打造的完美輪廓。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://sl.keroao.dpdns.org/og-preview.jpg">
+
+    <!-- 網頁小圖示 (Favicon) 避免瀏覽器報錯 -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- 引入 Google Fonts 提供的漂亮字體 (Outfit 負責英文與數字，Noto Sans TC 負責中文) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -85,7 +97,7 @@
                     <!-- 連接到排隊頁面 -->
                     <a href="./queue.html" class="btn btn-primary">查詢叫號進度</a>
                     <!-- 滑動到下方的收費標準區塊 -->
-                    <a href="#services" class="btn btn-secondary">瀏覽服務項目</a>
+                    <a href="#services" class="btn btn-primary">瀏覽服務項目</a>
                 </div>
             </div>
 
@@ -239,13 +251,8 @@
             <!-- 右側 Google Maps 嵌入區塊 -->
             <!-- iframe 標籤可以在網頁裡面挖一個洞，用來顯示另一個網頁(這裡是 Google地圖) -->
             <div class="footer-map" aria-label="SL剪髮店面地圖" style="overflow: hidden;">
-                <iframe 
-                    width="100%" 
-                    height="100%" 
-                    frameborder="0" 
-                    style="border:0;" 
-                    src="https://maps.google.com/maps?q=台中市北區山西路二段49號&t=m&z=16&output=embed&iwloc=near" 
-                    allowfullscreen>
+                <iframe width="100%" height="100%" frameborder="0" style="border:0;"
+                    src="https://maps.google.com/maps?q=台中市北區山西路二段49號&t=m&z=16&output=embed&iwloc=near" allowfullscreen>
                 </iframe>
             </div>
         </div>
@@ -253,9 +260,8 @@
         <!-- 網頁最底部的版權宣告列 -->
         <div class="footer-bottom">
             <!-- &copy; 是一個特殊的 HTML 代碼，會顯示版權符號 © -->
-            <p>&copy; 2026 SL 百元專業剪髮 版權所有。由 Antigravity 團隊精心設計與開發。 | 
-                <!-- 隱藏在角落的店長後台登入連結 -->
-                <a href="admin.html" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem;">⚙ 店長管理</a>
+            <p>&copy; 2026 SL 百元專業剪髮 版權所有。由 Antigravity 團隊精心設計與開發。 |
+                <!-- 移除公開的店長連結，改由直接輸入網址存取 -->
             </p>
         </div>
     </footer>
@@ -263,119 +269,8 @@
     <!-- ==========================================
          網頁互動邏輯 (內嵌 JavaScript)
          ========================================== -->
-    <script>
-        // DOMContentLoaded 代表等網頁 HTML 全部讀取完再執行，避免抓不到元素報錯
-        document.addEventListener('DOMContentLoaded', () => {
-            // try-catch 防護罩，避免程式錯誤導致整個畫面當掉
-            try {
-                // 啟動以下三個自訂函式
-                initHeaderScroll();
-                initMobileMenu();
-                initButtonRipples();
-            } catch (globalError) {
-                console.error('[CRITICAL] 網頁初始化失敗，請聯絡前端開發小組：', globalError);
-            }
-        });
-
-        // 1. 滾動時導覽列變色函式
-        function initHeaderScroll() {
-            const header = document.getElementById('mainHeader'); // 抓出 id="mainHeader" 的元素
-            if (!header) return; // 抓不到就終止
-
-            // 監聽網頁捲動事件
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) { // 如果網頁往下捲動超過 50 像素
-                    header.classList.add('header-scrolled'); // 幫它加上深色背景的 class
-                } else {
-                    header.classList.remove('header-scrolled'); // 恢復透明
-                }
-            });
-        }
-
-        // 2. 手機版收合選單邏輯 (漢堡按鈕)
-        function initMobileMenu() {
-            const navToggle = document.getElementById('menuToggleBtn'); // 漢堡按鈕
-            const navMenu = document.getElementById('navMenuList');     // 隱藏的選單清單
-
-            if (!navToggle || !navMenu) return; // 找不到就不執行
-
-            // 點擊漢堡按鈕時觸發
-            navToggle.addEventListener('click', (e) => {
-                e.stopPropagation(); // 阻止點擊事件擴散到整個網頁
-                
-                // 檢查目前是否為打開狀態
-                const isOpen = navMenu.style.display === 'flex';
-                if (isOpen) {
-                    navMenu.style.display = 'none'; // 隱藏
-                } else {
-                    // 打開選單，並強制加上一堆排版 CSS 設定
-                    navMenu.style.display = 'flex';
-                    navMenu.style.flexDirection = 'column'; // 直排
-                    navMenu.style.position = 'absolute';    // 浮動定位
-                    navMenu.style.top = '100%';             // 在導覽列的正下方
-                    navMenu.style.left = '0';
-                    navMenu.style.width = '100%';           // 全螢幕寬度
-                    navMenu.style.backgroundColor = 'rgba(3, 105, 161, 0.98)'; // 設定藍色背景
-                    navMenu.style.padding = '1.5rem';
-                    navMenu.style.borderBottom = '1px solid var(--glass-border)';
-                }
-            });
-
-            // 點擊選單內的任何連結時，自動幫客人把選單關起來 (避免選單擋住畫面)
-            navMenu.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768) { // 只在手機螢幕寬度時執行
-                        navMenu.style.display = 'none';
-                    }
-                });
-            });
-
-            // 點擊畫面外面的任何地方，如果選單是開著的，就自動關閉它
-            document.addEventListener('click', (e) => {
-                // 確定目前是手機寬度而且選單是打開的
-                if (window.innerWidth <= 768 && navMenu.style.display === 'flex') {
-                    // 如果點擊的地方既不是選單裡面，也不是漢堡按鈕
-                    if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-                        navMenu.style.display = 'none'; // 關閉選單
-                    }
-                }
-            });
-        }
-
-        // 3. 按鈕點擊水波紋效果 (Ripple)
-        // 這個特效會在按鈕裡面畫一個圓形，然後透過 CSS 放大變透明，製造水波漣漪的感覺
-        function initButtonRipples() {
-            // 找出網頁上所有套用 .btn 的按鈕
-            const buttons = document.querySelectorAll('.btn');
-            buttons.forEach(button => {
-                // 為每顆按鈕綁定點擊事件
-                button.addEventListener('click', function (e) {
-                    try {
-                        const circle = document.createElement('span'); // 產生一個空的 <span> 標籤
-                        // 計算圓形的直徑要多大 (拿按鈕寬或高最大的一邊)
-                        const diameter = Math.max(this.clientWidth, this.clientHeight);
-                        const radius = diameter / 2; // 計算半徑
-
-                        // 設定圓形的大小
-                        circle.style.width = circle.style.height = `${diameter}px`;
-                        // 根據滑鼠點擊螢幕的 XY 座標，減去按鈕本身在螢幕上的 XY 座標，算出圓形要出現的中心點
-                        circle.style.left = `${e.clientX - this.getBoundingClientRect().left - radius}px`;
-                        circle.style.top = `${e.clientY - this.getBoundingClientRect().top - radius}px`;
-                        circle.classList.add('ripple'); // 加上 ripple class 來啟動 CSS 動畫
-
-                        // 先把前一次點擊產生的舊水波紋清掉，避免累積太多造成網頁卡頓
-                        const ripple = this.querySelector('.ripple');
-                        if (ripple) ripple.remove();
-
-                        // 把畫好的圓形加到按鈕裡面
-                        this.appendChild(circle);
-                    } catch (err) {
-                        console.error('[Error] 無法繪製水波紋特效：', err);
-                    }
-                });
-            });
-        }
-    </script>
+    <!-- 引入共用的前端互動邏輯 (app.js) -->
+    <script src="./app.js"></script>
 </body>
 
 </html>
