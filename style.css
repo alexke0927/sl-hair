@@ -49,12 +49,16 @@
     /* 點擊導覽列時平滑滾動 */
 }
 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     font-family: var(--font-sans);
     background-color: var(--bg-main);
     color: var(--text-primary);
     line-height: 1.6;
-    overflow-x: hidden;
     position: relative;
 }
 
@@ -165,7 +169,6 @@ body {
     /* 懸停時為淺灰白色 */
 }
 
-<<<<<<< HEAD
 .btn-secondary {
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
@@ -182,24 +185,6 @@ body {
     box-shadow: var(--shadow-neon);
     transform: translateY(-3px);
 }
-=======
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            border-color: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-color: var(--color-accent);
-            color: var(--color-accent);
-            box-shadow: var(--shadow-neon);
-            transform: translateY(-3px);
-        }
->>>>>>> 982268208e9012d953adcbf5a5a7d2ddab600d54
 
 /* 按鈕點擊水波紋效果 */
 .ripple {
