@@ -576,8 +576,13 @@
             const btnModalRefresh = document.getElementById('btnModalRefresh');
             if (btnModalRefresh) {
                 btnModalRefresh.onclick = () => {
-                    modalCurrentCall.textContent = globalState.current_calling;
-                    updateModalStatus(ticketNum, globalState.current_calling);
+                    if (ticketNum === globalState.current_calling) {
+                        // 如果已經輪到自己了，按下按鈕就代表「已完成」，直接清除
+                        resetToDispenseState();
+                    } else {
+                        modalCurrentCall.textContent = globalState.current_calling;
+                        updateModalStatus(ticketNum, globalState.current_calling);
+                    }
                 };
             }
 
@@ -585,28 +590,37 @@
             const btnModalRedraw = document.getElementById('btnModalRedraw');
             if (btnModalRedraw) {
                 btnModalRedraw.onclick = () => {
-                    // 把手機裡存的舊號碼洗掉
-                    localStorage.removeItem('sl_my_ticket_number');
-                    // 關閉視窗
-                    modal.classList.remove('show');
-                    activeTicketNum = null;
-                    setTimeout(() => {
-                        modal.style.display = 'none';
-                        
-                        // 把抽號碼的按鈕重新打開，並把剛才吐出來的那張票藏起來
-                        const btnDispense = document.getElementById('btnDispense');
-                        const ticketPaper = document.getElementById('ticketPaper');
-                        if (btnDispense) btnDispense.style.display = 'inline-flex';
-                        if (ticketPaper) ticketPaper.style.display = 'none';
-                        
-                        // 把網址清乾淨
-                        if (window.location.protocol !== 'file:') {
-                            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-                            window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
-                        }
-                    }, 400);
+                    resetToDispenseState();
                 };
             }
+        }
+
+        // 恢復到初始可取號狀態的函式
+        function resetToDispenseState() {
+            const modal = document.getElementById('ticketModal');
+            localStorage.removeItem('sl_my_ticket_number');
+            localStorage.removeItem('sl_my_turn_time');
+            activeTicketNum = null;
+            if (window.myTurnTimeout) {
+                clearTimeout(window.myTurnTimeout);
+                window.myTurnTimeout = null;
+            }
+            if (modal) modal.classList.remove('show');
+            setTimeout(() => {
+                if (modal) modal.style.display = 'none';
+                
+                // 把抽號碼的按鈕重新打開，並把剛才吐出來的那張票藏起來
+                const btnDispense = document.getElementById('btnDispense');
+                const ticketPaper = document.getElementById('ticketPaper');
+                if (btnDispense) btnDispense.style.display = 'inline-flex';
+                if (ticketPaper) ticketPaper.style.display = 'none';
+                
+                // 把網址清乾淨
+                if (window.location.protocol !== 'file:') {
+                    const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                    window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
+                }
+            }, 400);
         }
 
         // 計算視窗裡面「前面還有幾個人」跟「還要等幾分鐘」的邏輯
@@ -616,7 +630,23 @@
             const btnModalRedraw = document.getElementById('btnModalRedraw');
             if (!modalWaitingCount) return;
 
+            // 確保重新整理按鈕恢復原本外觀
+            const btnRefresh = document.getElementById('btnModalRefresh');
+            if (btnRefresh) {
+                btnRefresh.textContent = '🔄 點擊重新整理最新狀態';
+                btnRefresh.style.backgroundColor = '';
+                btnRefresh.style.color = '';
+                btnRefresh.style.borderColor = '';
+            }
+
+            // 清除之前的計時器
+            if (window.myTurnTimeout) {
+                clearTimeout(window.myTurnTimeout);
+                window.myTurnTimeout = null;
+            }
+
             if (tNum > globalState.latest_ticket) {
+                localStorage.removeItem('sl_my_turn_time');
                 // 如果你的號碼比系統發出的最新號碼還大 (這不可能，除非店長按了重置按鈕洗掉資料了)
                 modalWaitingCount.textContent = '系統已重置';
                 modalWaitingCount.style.color = '#ef4444';
@@ -624,6 +654,7 @@
                 // 顯示紅色的重新抽號按鈕
                 if (btnModalRedraw) btnModalRedraw.style.display = 'inline-flex';
             } else if (tNum < cCall) {
+                localStorage.removeItem('sl_my_turn_time');
                 // 如果你的號碼比店長叫的號碼還小，代表你過號了！
                 modalWaitingCount.textContent = '已過號';
                 modalWaitingCount.style.color = '#ef4444';
@@ -637,7 +668,34 @@
                 modalEstTimeVal.innerHTML = '0 <span style="font-size:0.9rem; font-weight:normal; color:#64748b;">分鐘</span>';
                 // 隱藏重新抽號按鈕
                 if (btnModalRedraw) btnModalRedraw.style.display = 'none';
+
+                // 把重新整理按鈕變成「完成 / 清除」按鈕
+                if (btnRefresh) {
+                    btnRefresh.textContent = '✅ 我已完成剪髮 (清除號碼)';
+                    btnRefresh.style.backgroundColor = '#10b981';
+                    btnRefresh.style.color = 'white';
+                    btnRefresh.style.borderColor = '#10b981';
+                }
+
+                // 檢查何時輪到他的，如果超過 15 分鐘，自動回到重新取票狀態
+                let turnTime = localStorage.getItem('sl_my_turn_time');
+                if (!turnTime) {
+                    turnTime = Date.now();
+                    localStorage.setItem('sl_my_turn_time', turnTime);
+                }
+                const elapsed = Date.now() - parseInt(turnTime, 10);
+                const fifteenMins = 15 * 60 * 1000;
+                
+                if (elapsed >= fifteenMins) {
+                    resetToDispenseState();
+                    return;
+                } else {
+                    window.myTurnTimeout = setTimeout(() => {
+                        resetToDispenseState();
+                    }, fifteenMins - elapsed);
+                }
             } else {
+                localStorage.removeItem('sl_my_turn_time');
                 // 正常排隊中：算出差幾號
                 const diff = tNum - cCall;
                 modalWaitingCount.textContent = `${diff} 人`;
