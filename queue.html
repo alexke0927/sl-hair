@@ -292,7 +292,9 @@
                             const notifiedKey = `sl_notified_${todayStr}_${myNumber}`;
                             if (!sessionStorage.getItem(notifiedKey)) {
                                 sessionStorage.setItem(notifiedKey, 'true'); // 標記已通知
-                                alert(`【輪到您了！】\\n您的號碼 ${myNumber} 號已經開始叫號，請立即前往櫃檯！`);
+                                // 使用精美的自訂通知，取代原本醜醜的 alert()
+                                showCustomToast('【輪到您了！】', `您的號碼 ${myNumber} 號已經開始叫號，請立即前往櫃檯！`);
+                                
                                 // 強制呼叫大視窗彈出，強烈佔據視覺
                                 if (typeof showTicketModal === 'function') {
                                     showTicketModal(myNumber);
@@ -705,6 +707,59 @@
                 // 隱藏重新抽號按鈕
                 if (btnModalRedraw) btnModalRedraw.style.display = 'none';
             }
+        }
+
+        // === [新增：精美的 Toast 提示動畫] ===
+        function showCustomToast(title, message) {
+            // 建立 Toast 容器
+            const toast = document.createElement('div');
+            toast.style.position = 'fixed';
+            toast.style.top = '-100px'; // 初始在畫面外
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = '#10b981'; // 漂亮綠色
+            toast.style.color = 'white';
+            toast.style.padding = '16px 24px';
+            toast.style.borderRadius = '12px';
+            toast.style.boxShadow = '0 10px 25px -5px rgba(16, 185, 129, 0.4)';
+            toast.style.zIndex = '99999'; // 確保在最上層
+            toast.style.display = 'flex';
+            toast.style.flexDirection = 'column';
+            toast.style.alignItems = 'center';
+            toast.style.gap = '8px';
+            toast.style.transition = 'top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)'; // Q彈動畫
+            toast.style.minWidth = '280px';
+            toast.style.textAlign = 'center';
+
+            // 標題
+            const titleEl = document.createElement('div');
+            titleEl.textContent = title;
+            titleEl.style.fontWeight = '800';
+            titleEl.style.fontSize = '1.1rem';
+            titleEl.style.letterSpacing = '1px';
+            
+            // 內文
+            const msgEl = document.createElement('div');
+            msgEl.textContent = message;
+            msgEl.style.fontSize = '0.95rem';
+            msgEl.style.opacity = '0.9';
+
+            toast.appendChild(titleEl);
+            toast.appendChild(msgEl);
+            document.body.appendChild(toast);
+
+            // 觸發動畫滑入
+            setTimeout(() => {
+                toast.style.top = '20px';
+            }, 10);
+
+            // 5 秒後自動滑出並刪除
+            setTimeout(() => {
+                toast.style.top = '-100px';
+                setTimeout(() => {
+                    toast.remove();
+                }, 500);
+            }, 5000);
         }
     </script>
 </body>
