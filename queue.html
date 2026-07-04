@@ -468,6 +468,7 @@
                     // 這個 callback 會在寫入成功或失敗後執行
                     if (error) {
                         console.error('取號失敗：', error);
+                        alert('取號失敗！可能是資料庫權限不足（例如 Firebase 測試模式已過期），請聯絡管理員檢查 Firebase Security Rules。');
                     } else if (committed) {
                         const newData = snapshot.val();
                         const newTicketNumber = newData.latest_ticket; // 抓出我剛剛抽到的號碼是幾號

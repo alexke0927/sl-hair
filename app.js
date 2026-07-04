@@ -194,9 +194,8 @@ function initQueueCalculator() {
     const designersCount = 2;        // 假設有 2 位設計師在剪髮
     const averageMinutesPerCut = 10; // 假設每個人平均剪 10 分鐘
 
-    // 如果畫面上有少任何一個元件，代表這個網頁可能沒有這個功能，我們就報錯並退出。
+    // 如果畫面上有少任何一個元件，代表這個網頁可能沒有這個功能，我們直接退出即可，不需要報錯。
     if (!calcForm || !ticketInput || !resultDiv || !timeValueText || !inputError) {
-        console.error('[Error] 初始化排隊估算器失敗：DOM 節點缺失。');
         return;
     }
 
